@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIA Support — E2E Status Prototype</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="index.html" class="topnav-brand">
+      <span class="logo">K</span>
+      <span>KIA Support — Vision Prototype</span>
+    </a>
+    <span class="topnav-context">Foundational triad: UC-A01, UC-A03, UC-A06</span>
+    <div class="topnav-links">
+      <a href="supplier.html">Supplier view</a>
+      <a href="agent.html">Agent view</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <div class="landing-hero">
+      <h1>End-to-End Item Status Visibility</h1>
+      <p>
+        A clickable vision prototype for what suppliers and internal support agents could see
+        if KIA pipeline status were unified across systems. Mock data only — built to demonstrate
+        the experience, not the infrastructure.
+      </p>
+    </div>
+
+    <!-- Two main entry points -->
+    <div class="landing-cards">
+      <a href="supplier.html" class="landing-card">
+        <span class="tag tag-supplier">Supplier</span>
+        <h2>Item Status Detail →</h2>
+        <p>
+          A supplier searches a GTIN and sees the full pipeline timeline with explicit
+          NULL states, banner-by-banner status, and plain-language errors.
+        </p>
+        <div class="uc">UC-A01 · UC-A03 · UC-A13</div>
+      </a>
+
+      <a href="agent.html" class="landing-card">
+        <span class="tag tag-agent">Internal</span>
+        <h2>Agent Diagnostic View →</h2>
+        <p>
+          An agent opens a Harris Teeter cache case and sees the cross-system timeline
+          with logs, routing suggestion, chronic-issue alert, and audited fix actions.
+        </p>
+        <div class="uc">UC-A06 · UC-A07 · UC-A08 · UC-A13</div>
+      </a>
+    </div>
+
+    <!-- Quick-jump scenarios on the supplier view -->
+    <section class="card" style="margin-top:24px;">
+      <div class="card-header">
+        <h3 class="card-title">Quick-jump: Supplier Scenarios</h3>
+        <span style="color:var(--gray-500); font-size:12px;">
+          The supplier view supports three demo scenarios via the chip switcher
+        </span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
+        <a href="supplier.html?scenario=HAPPY" class="banner-card healthy" style="text-decoration:none; color:inherit;">
+          <div class="banner-name"><span>Happy path</span><span class="badge badge-progress">⏳ In progress</span></div>
+          <div class="banner-meta">
+            <span>Kraft Heinz · GTIN 00012345678905</span>
+            <span style="color:var(--gray-500); font-style:italic;">Item is mid-pipeline; downstream stages are NULL.</span>
+          </div>
+        </a>
+        <a href="supplier.html?scenario=ERROR" class="banner-card unhealthy" style="text-decoration:none; color:inherit;">
+          <div class="banner-name"><span>Validation error</span><span class="badge badge-failed">❌ Failed</span></div>
+          <div class="banner-meta">
+            <span>Boston Beer · GTIN 00087692000044</span>
+            <span style="color:var(--gray-500); font-style:italic;">Image orientation invalid — supplier-fixable.</span>
+          </div>
+        </a>
+        <a href="supplier.html?scenario=BANNER" class="banner-card degraded" style="text-decoration:none; color:inherit;">
+          <div class="banner-name"><span>Banner cache stale</span><span class="badge badge-warning">⚠ Partial</span></div>
+          <div class="banner-meta">
+            <span>Tillamook · GTIN 00087692000825</span>
+            <span style="color:var(--gray-500); font-style:italic;">Live on Kroger.com; Harris Teeter cache stuck for 5 days.</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <div class="proto-note" style="margin-top:24px;">
+      <b>Scope of this prototype:</b> Foundational triad screens only —
+      Supplier Status Detail (Screen 2), Error Detail Modal (Screen 3), Agent Diagnostic Detail (Screen 6).
+      Other screens in the brief (dashboard search, case creation form, banner health dashboard, notification preferences)
+      are referenced via stubs that surface a placeholder when clicked.
+    </div>
+
+  </main>
+</body>
+</html>

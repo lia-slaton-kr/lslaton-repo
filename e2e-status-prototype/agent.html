@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnostic Detail — KIA Support (Agent)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       Top navigation
+       ============================================================ -->
+  <nav class="topnav">
+    <a href="index.html" class="topnav-brand">
+      <span class="logo">K</span>
+      <span>KIA Support — Agent Console</span>
+    </a>
+    <span class="topnav-context">Agent <b>J. Patel</b> · Banner IT</span>
+    <div class="topnav-links">
+      <a href="supplier.html">Supplier view</a>
+      <a href="agent.html" class="active">Agent view</a>
+    </div>
+  </nav>
+
+  <main class="page page-wide">
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="index.html">Agent Dashboard</a><span class="sep">›</span>
+      <a href="#">Open cases</a><span class="sep">›</span>
+      <span>CASE-2026-05-0001</span>
+    </div>
+
+    <!-- ============================================================
+         Item header — agent flavor with action buttons
+         ============================================================ -->
+    <section class="item-header">
+      <div class="item-header-top">
+        <div>
+          <div class="item-gtin">00087692000825</div>
+          <div class="item-meta">
+            <span><b>Tillamook</b></span>
+            <span>Case <b>CASE-2026-05-0001</b></span>
+            <span>Issue <b>IMAGE_NOT_UPDATING</b></span>
+            <span>Affected banner <b>Harris Teeter</b></span>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <span class="badge badge-large badge-warning">⚠ Partial Success</span>
+        </div>
+      </div>
+
+      <!-- Action bar (UC-A06 / UC-A13: agent fix actions, all logged) -->
+      <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="logAction('Requested Harris Teeter cache invalidation')">
+          🔄 Request Harris Teeter Cache Invalidation
+        </button>
+        <button class="btn" onclick="logAction('Forced PDP refresh for Kroger.com')">
+          ↻ Force PDP Refresh
+        </button>
+        <button class="btn" onclick="logAction('Escalated to Engineering for systemic fix')">
+          ↑ Escalate to Engineering
+        </button>
+        <button class="btn" onclick="logAction('Marked case Pending Verification; supplier notified')">
+          ✓ Mark Pending Verification
+        </button>
+      </div>
+    </section>
+
+    <div class="two-col">
+
+      <!-- ============================================================
+           LEFT COLUMN: Cross-system diagnostic timeline w/ logs
+           (UC-A06 — diagnose across systems in one view)
+           ============================================================ -->
+      <div>
+        <section class="card">
+          <div class="card-header">
+            <h3 class="card-title">Cross-system Timeline</h3>
+            <span style="color:var(--gray-500); font-size:12px;">
+              Click any stage to expand logs
+            </span>
+          </div>
+          <div class="timeline" id="agent-timeline"></div>
+
+          <div class="proto-note">
+            <b>Design principle:</b> Every stage exposes the underlying system's logs in one
+            view — no more bouncing between 6+ tools to assemble the picture.
+          </div>
+        </section>
+
+        <!-- Audit trail — every agent action logged (UC-A13 transparency) -->
+        <section class="card">
+          <div class="card-header">
+            <h3 class="card-title">Audit Trail</h3>
+            <span style="color:var(--gray-500); font-size:12px;">All actions are logged</span>
+          </div>
+          <div class="audit-list" id="audit-list"></div>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           RIGHT COLUMN: Routing suggestion, banner health, errors,
+           chronic issue alert
+           ============================================================ -->
+      <aside>
+
+        <!-- Routing suggestion (UC-A07 — case routing) -->
+        <section class="card">
+          <div class="card-header"><h3 class="card-title">Routing Suggestion</h3></div>
+          <div class="routing-box">
+            <div class="label">Recommended owner</div>
+            <div class="team" id="routing-team">Banner IT</div>
+            <div class="reason" id="routing-reason"></div>
+            <div style="margin-top:10px; display:flex; gap:6px;">
+              <button class="btn btn-primary btn-sm" onclick="logAction('Auto-routed to Banner IT')">Auto-route</button>
+              <button class="btn btn-sm" onclick="alert('Prototype: would open manual override dialog with reason capture.')">Override</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Chronic issue alert (UC-A08) -->
+        <section class="card" style="border-left:4px solid var(--status-warning);">
+          <div class="card-header">
+            <h3 class="card-title" style="color:var(--status-warning);">⚠ Chronic Issue Detected</h3>
+          </div>
+          <p style="margin:0 0 8px;">
+            <b>3 tickets in 90 days</b> for Harris Teeter cache invalidation from this supplier.
+          </p>
+          <ul style="margin:0; padding-left:18px; font-size:13px; color:var(--gray-700);">
+            <li><a href="#">CASE-2026-03-0015</a> — Mar 12</li>
+            <li><a href="#">CASE-2026-04-0032</a> — Apr 04</li>
+            <li><b>CASE-2026-05-0001</b> — May 15 (current)</li>
+          </ul>
+          <button class="btn btn-sm" style="margin-top:10px;" onclick="alert('Prototype: would open RCA workflow (UC-A08).')">
+            Open RCA Workflow
+          </button>
+        </section>
+
+        <!-- Banner health (UC-A13) -->
+        <section class="card">
+          <div class="card-header"><h3 class="card-title">Banner Health</h3></div>
+          <div class="banner-grid" style="grid-template-columns:1fr;" id="banner-health"></div>
+        </section>
+
+        <!-- Error context — links to taxonomy entry -->
+        <section class="card">
+          <div class="card-header"><h3 class="card-title">Error Context</h3></div>
+          <div style="font-size:13px;">
+            <div><b>Code:</b> <code>BANNER_CACHE_STALE_HT</code></div>
+            <div style="margin-top:6px;"><b>Technical:</b> <span style="color:var(--gray-600);">HarrisTeeterCDN: cache_age=5d, last_invalidation_failed=true</span></div>
+            <div style="margin-top:6px;"><b>Plain language:</b> Harris Teeter's cache hasn't refreshed since the item was published.</div>
+            <div style="margin-top:6px;"><b>Category:</b> <span class="badge badge-cat-diagnosis">Requires diagnosis</span></div>
+          </div>
+        </section>
+
+      </aside>
+
+    </div>
+
+  </main>
+
+  <script src="mock-data.js"></script>
+  <script>
+    // ============================================================
+    // Same status maps as the supplier view
+    // ============================================================
+    const BADGE_BY_STATUS = {
+      COMPLETED:   { cls: "badge-success",  label: "✓ Completed" },
+      APPROVED:    { cls: "badge-success",  label: "✓ Approved" },
+      LIVE:        { cls: "badge-success",  label: "✓ Live" },
+      IN_PROGRESS: { cls: "badge-progress", label: "⏳ In progress" },
+      FAILED:      { cls: "badge-failed",   label: "❌ Failed" },
+      STALE:       { cls: "badge-stale",    label: "⚠ Cache stale" },
+      NULL:        { cls: "badge-unknown",  label: "❓ Status unknown" },
+      UNKNOWN:     { cls: "badge-unknown",  label: "❓ Status unknown" }
+    };
+    const MARKER_BY_STATUS = {
+      COMPLETED: { cls: "success",  glyph: "✓" },
+      APPROVED:  { cls: "success",  glyph: "✓" },
+      LIVE:      { cls: "success",  glyph: "✓" },
+      IN_PROGRESS:{ cls: "progress",glyph: "⏳" },
+      FAILED:    { cls: "failed",   glyph: "✕" },
+      NULL:      { cls: "unknown",  glyph: "?" },
+      UNKNOWN:   { cls: "unknown",  glyph: "?" }
+    };
+
+    function fmtTime(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      return d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true });
+    }
+
+    // ============================================================
+    // Agent diagnostic timeline — like supplier view but each stage
+    // has expandable system logs.
+    // ============================================================
+    function renderAgentTimeline() {
+      const item = MOCK.ITEMS.BANNER;
+      const diag = MOCK.DIAGNOSTIC_LOGS[item.gtin];
+      const stageLookup = MOCK.STAGES.reduce((acc, s) => (acc[s.name] = s.displayName, acc), {});
+      const tl = document.getElementById("agent-timeline");
+      tl.innerHTML = "";
+
+      item.stages.forEach((s) => {
+        const m = MARKER_BY_STATUS[s.status] || MARKER_BY_STATUS.NULL;
+        const b = BADGE_BY_STATUS[s.status] || BADGE_BY_STATUS.NULL;
+        const stageLogs = diag.logs[s.name];
+
+        const stageEl = document.createElement("div");
+        stageEl.className = "tl-stage" + (s.status === "FAILED" ? " is-current" : "");
+
+        const logsHtml = stageLogs ? `
+          <button class="expand-toggle" data-target="logs-${s.name}">View ${stageLogs.length} log entries</button>
+          <div class="logs" id="logs-${s.name}" style="display:none;">
+            ${stageLogs.map(l => `
+              <div>
+                <span class="log-time">[${l.time}]</span>
+                <span class="log-${l.level}">${l.level === "fail" ? "FAIL" : l.level === "pass" ? "PASS" : "INFO"}</span>
+                ${l.text}
+              </div>
+            `).join("")}
+          </div>
+        ` : "";
+
+        stageEl.innerHTML = `
+          <div class="tl-marker ${m.cls}">${m.glyph}</div>
+          <div class="tl-row">
+            <div style="flex:1;">
+              <div class="tl-name">${stageLookup[s.name] || s.name}</div>
+              ${s.note ? `<div class="tl-note">${s.note}</div>` : ""}
+              ${logsHtml}
+            </div>
+            <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+              <span class="badge ${b.cls}">${b.label}</span>
+              <span class="tl-time">${fmtTime(s.timestamp)}</span>
+            </div>
+          </div>
+        `;
+        tl.appendChild(stageEl);
+      });
+
+      // Expand/collapse log sections
+      tl.querySelectorAll(".expand-toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = document.getElementById(btn.dataset.target);
+          const willOpen = target.style.display === "none";
+          target.style.display = willOpen ? "block" : "none";
+          btn.textContent = (willOpen ? "Hide " : "View ") + target.children.length + " log entries";
+          btn.classList.toggle("open", willOpen);
+        });
+      });
+    }
+
+    // ============================================================
+    // Routing reason
+    // ============================================================
+    function renderRouting() {
+      const diag = MOCK.DIAGNOSTIC_LOGS["00087692000825"];
+      document.getElementById("routing-team").textContent =
+        diag.ownershipSuggestion === "BANNER_IT" ? "Banner IT" : diag.ownershipSuggestion;
+      document.getElementById("routing-reason").textContent = diag.ownershipReason;
+    }
+
+    // ============================================================
+    // Banner health sidebar
+    // ============================================================
+    function renderBannerHealth() {
+      const grid = document.getElementById("banner-health");
+      grid.innerHTML = "";
+      MOCK.BANNER_HEALTH.forEach(b => {
+        const cls = b.status === "HEALTHY" ? "healthy" :
+                    b.status === "DEGRADED" ? "degraded" : "unhealthy";
+        const badgeCls = b.status === "HEALTHY" ? "badge-success" :
+                         b.status === "DEGRADED" ? "badge-warning" : "badge-failed";
+        const card = document.createElement("div");
+        card.className = `banner-card ${cls}`;
+        card.innerHTML = `
+          <div class="banner-name">
+            <span>${b.name}</span>
+            <span class="badge ${badgeCls}">${b.status}</span>
+          </div>
+          <div class="banner-meta">
+            <span>Avg cache age <b>${b.avgCacheAge}</b></span>
+            <span>Stale items <b>${b.staleItems}</b></span>
+            <span>Recent failures <b>${b.recentFailures}</b></span>
+            ${b.flag ? `<span style="color:var(--status-warning); font-style:italic; margin-top:4px;">${b.flag}</span>` : ""}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ============================================================
+    // Audit trail — adds new entries when agent clicks actions
+    // ============================================================
+    let auditEntries = [];
+    function renderAudit() {
+      const list = document.getElementById("audit-list");
+      list.innerHTML = "";
+      auditEntries.forEach(a => {
+        const row = document.createElement("div");
+        row.className = "audit-row";
+        row.innerHTML = `
+          <span class="audit-time">${fmtTime(a.time)}</span>
+          <div>
+            <div class="audit-action">${a.action}</div>
+            <div class="audit-actor">${a.actor}</div>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function logAction(text) {
+      auditEntries.unshift({
+        time: new Date().toISOString(),
+        actor: "Agent: J. Patel (you)",
+        action: text
+      });
+      renderAudit();
+    }
+
+    function loadInitialAudit() {
+      const diag = MOCK.DIAGNOSTIC_LOGS["00087692000825"];
+      auditEntries = diag.auditTrail.slice().reverse(); // newest first
+      renderAudit();
+    }
+
+    // ============================================================
+    // Init
+    // ============================================================
+    renderAgentTimeline();
+    renderRouting();
+    renderBannerHealth();
+    loadInitialAudit();
+  </script>
+</body>
+</html>

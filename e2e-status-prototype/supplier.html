@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Status — KIA Support (Supplier)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       Top navigation
+       ============================================================ -->
+  <nav class="topnav">
+    <a href="index.html" class="topnav-brand">
+      <span class="logo">K</span>
+      <span>KIA Support</span>
+    </a>
+    <span class="topnav-context">Logged in as <b>j.smith@krafheinz.com</b> (Supplier)</span>
+    <div class="topnav-links">
+      <a href="supplier.html" class="active">Supplier view</a>
+      <a href="agent.html">Agent view</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="index.html">Dashboard</a><span class="sep">›</span>
+      <a href="#">Recent items</a><span class="sep">›</span>
+      <span id="bc-gtin">00012345678905</span>
+    </div>
+
+    <!-- Prototype scenario switcher (UC-A01 / UC-A03 / UC-A13 demo) -->
+    <div class="scenario-switch">
+      <span class="label">Demo scenario:</span>
+      <div class="chips" id="scenario-chips">
+        <button class="scenario-chip active" data-scenario="HAPPY">Happy path (in progress)</button>
+        <button class="scenario-chip" data-scenario="ERROR">Validation error</button>
+        <button class="scenario-chip" data-scenario="BANNER">Harris Teeter cache stale</button>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         Item header
+         ============================================================ -->
+    <section class="item-header">
+      <div class="item-header-top">
+        <div>
+          <div class="item-gtin" id="hdr-gtin">00012345678905</div>
+          <div class="item-meta">
+            <span><b id="hdr-supplier">Kraft Heinz</b></span>
+            <span>Submission <b id="hdr-submission">SUB-2026-05-12345</b></span>
+            <span>Last updated <b id="hdr-updated">2 hours ago</b></span>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <span id="hdr-status-badge" class="badge badge-large badge-progress">⏳ In progress</span>
+          <button class="btn btn-primary" onclick="alert('Prototype: would open the case creation form (UC-A05)')">+ Create Support Case</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next-action callout (UC-A03: ownership clarity)
+         ============================================================ -->
+    <div id="callout" class="callout callout-success">
+      <span class="icon">✓</span>
+      <span id="callout-text">No action required; item processing normally.</span>
+    </div>
+
+    <!-- ============================================================
+         Vertical timeline (UC-A01)
+         Shows every stage with explicit NULL states.
+         ============================================================ -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">Item Pipeline Timeline</h3>
+        <span style="color:var(--gray-500); font-size:12px;">Status as of <span id="tl-asof">2026-05-15 14:32 UTC</span></span>
+      </div>
+      <div class="timeline" id="timeline"></div>
+
+      <div class="proto-note">
+        <b>Design principle:</b> NULL states are first-class. Stages we can't yet observe
+        are labeled "Status unknown" — never hidden. This is what suppliers
+        previously had no visibility into.
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Banner breakdown (UC-A13)
+         ============================================================ -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">Banner Status</h3>
+        <span style="color:var(--gray-500); font-size:12px;">Each banner has its own CDN and cache behavior</span>
+      </div>
+      <div class="banner-grid" id="banner-grid"></div>
+    </section>
+
+    <!-- ============================================================
+         Errors list (only shown when errors exist)
+         Click row → opens error detail modal (Screen 3 / UC-A03)
+         ============================================================ -->
+    <section class="card" id="errors-card" style="display:none;">
+      <div class="card-header">
+        <h3 class="card-title">Issues Detected</h3>
+        <span style="color:var(--gray-500); font-size:12px;">Click any issue to see what to do.</span>
+      </div>
+      <div class="error-list" id="error-list"></div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       Error Detail Modal (Screen 3 / UC-A03)
+       Plain-language explanation, ownership category, fix steps.
+       ============================================================ -->
+  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon" id="modal-icon">⚠️</span>
+          <div>
+            <h3 class="modal-title" id="modal-title">Image orientation invalid</h3>
+            <span class="badge modal-cat badge-cat-supplier" id="modal-cat-badge">You can fix this</span>
+          </div>
+        </div>
+        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>What went wrong</h4>
+          <p id="modal-explanation">Your front-facing product image doesn't match Kroger's specifications.</p>
+          <p style="font-size:12px; color:var(--gray-500);">
+            Affected field: <code id="modal-field">images.front.orientation</code>
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h4>How to fix it</h4>
+          <p id="modal-fix-summary">Update your front image to meet Kroger's requirements and resubmit.</p>
+          <ol id="modal-fix-steps"></ol>
+        </div>
+
+        <div class="modal-section" id="modal-spec-section">
+          <h4>Requirements</h4>
+          <table class="spec-table">
+            <tbody id="modal-spec-table"></tbody>
+          </table>
+        </div>
+
+        <div class="modal-section" id="modal-examples-section">
+          <h4>Examples</h4>
+          <div class="example-row">
+            <div class="example-card good">
+              <div class="swatch">✓</div>
+              <div><b>Correct</b></div>
+              <div style="color:var(--gray-600);">Front-facing, white background</div>
+            </div>
+            <div class="example-card bad">
+              <div class="swatch">✗</div>
+              <div><b>Incorrect</b></div>
+              <div style="color:var(--gray-600);">Angled view, colored background</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <a id="modal-kb-link" href="#" target="_blank">📚 Learn more in our knowledge base</a>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn" id="modal-create-case">Create Support Case</button>
+        <button class="btn btn-primary" id="modal-got-it">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="mock-data.js"></script>
+  <script>
+    // ============================================================
+    // Helpers — render status badges / timeline markers
+    // ============================================================
+    const BADGE_BY_STATUS = {
+      COMPLETED:   { cls: "badge-success",  label: "✓ Completed" },
+      APPROVED:    { cls: "badge-success",  label: "✓ Approved" },
+      LIVE:        { cls: "badge-success",  label: "✓ Live" },
+      IN_PROGRESS: { cls: "badge-progress", label: "⏳ In progress" },
+      FAILED:      { cls: "badge-failed",   label: "❌ Failed" },
+      STALE:       { cls: "badge-stale",    label: "⚠ Cache stale" },
+      NULL:        { cls: "badge-unknown",  label: "❓ Status unknown" },
+      UNKNOWN:     { cls: "badge-unknown",  label: "❓ Status unknown" },
+      PARTIAL:     { cls: "badge-warning",  label: "⚠ Partial success" }
+    };
+    const MARKER_BY_STATUS = {
+      COMPLETED: { cls: "success",  glyph: "✓" },
+      APPROVED:  { cls: "success",  glyph: "✓" },
+      LIVE:      { cls: "success",  glyph: "✓" },
+      IN_PROGRESS:{ cls: "progress",glyph: "⏳" },
+      FAILED:    { cls: "failed",   glyph: "✕" },
+      NULL:      { cls: "unknown",  glyph: "?" },
+      UNKNOWN:   { cls: "unknown",  glyph: "?" },
+      STALE:     { cls: "failed",   glyph: "!" }
+    };
+
+    function fmtTime(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      return d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true });
+    }
+
+    // ============================================================
+    // Render the timeline (Screen 2 main visual / UC-A01)
+    // ============================================================
+    function renderTimeline(item) {
+      const stageLookup = MOCK.STAGES.reduce((acc, s) => (acc[s.name] = s.displayName, acc), {});
+      const tl = document.getElementById("timeline");
+      tl.innerHTML = "";
+
+      item.stages.forEach((s) => {
+        const m = MARKER_BY_STATUS[s.status] || MARKER_BY_STATUS.NULL;
+        const b = BADGE_BY_STATUS[s.status] || BADGE_BY_STATUS.NULL;
+
+        const isCurrent = item.currentStage === s.name && (s.status === "IN_PROGRESS" || s.status === "FAILED");
+
+        const stageEl = document.createElement("div");
+        stageEl.className = "tl-stage" + (isCurrent ? " is-current" : "");
+        stageEl.innerHTML = `
+          <div class="tl-marker ${m.cls}">${m.glyph}</div>
+          <div class="tl-row">
+            <div>
+              <div class="tl-name">${stageLookup[s.name] || s.name}</div>
+              ${s.note ? `<div class="tl-note">${s.note}</div>` : ""}
+              ${s.details && s.details.provider ? `<div class="tl-detail">via ${s.details.provider}</div>` : ""}
+              ${s.details && s.details.rulesPassed ? `<div class="tl-detail">${s.details.rulesPassed} validation rules passed</div>` : ""}
+            </div>
+            <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+              <span class="badge ${b.cls}">${b.label}</span>
+              <span class="tl-time">${fmtTime(s.timestamp)}</span>
+            </div>
+          </div>
+        `;
+        tl.appendChild(stageEl);
+      });
+    }
+
+    // ============================================================
+    // Render banner cards (UC-A13 — banner-specific status)
+    // ============================================================
+    function renderBanners(item) {
+      const grid = document.getElementById("banner-grid");
+      grid.innerHTML = "";
+      item.banners.forEach((b) => {
+        const badge = BADGE_BY_STATUS[b.status] || BADGE_BY_STATUS.UNKNOWN;
+        const healthClass =
+          b.status === "LIVE" ? "healthy" :
+          b.status === "STALE" ? "unhealthy" :
+          b.status === "UNKNOWN" ? "unknown" : "degraded";
+
+        const card = document.createElement("div");
+        card.className = `banner-card ${healthClass}`;
+        card.innerHTML = `
+          <div class="banner-name">
+            <span>${b.name}</span>
+            <span class="badge ${badge.cls}">${badge.label}</span>
+          </div>
+          <div class="banner-meta">
+            ${b.lastPublished ? `<span>Published <b>${fmtTime(b.lastPublished)}</b></span>` : ""}
+            ${b.cacheAge ? `<span>Cache age <b>${b.cacheAge}</b></span>` : ""}
+            ${b.lastCacheRefresh ? `<span>Last cache refresh <b>${fmtTime(b.lastCacheRefresh)}</b></span>` : ""}
+            ${b.note ? `<span style="color:var(--gray-500); font-style:italic;">${b.note}</span>` : ""}
+          </div>
+          ${b.pdpUrl ? `<a href="${b.pdpUrl}" class="banner-link" target="_blank">View on banner →</a>` : ""}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ============================================================
+    // Render errors list and wire up clicks → modal
+    // ============================================================
+    function renderErrors(item) {
+      const card = document.getElementById("errors-card");
+      const list = document.getElementById("error-list");
+      if (!item.errors || item.errors.length === 0) {
+        card.style.display = "none";
+        return;
+      }
+      card.style.display = "";
+      list.innerHTML = "";
+      item.errors.forEach((e) => {
+        const row = document.createElement("div");
+        row.className = "error-row";
+        row.innerHTML = `
+          <div class="icon">⚠️</div>
+          <div class="body">
+            <div class="title">${e.plainLanguageMessage}</div>
+            <div class="sub">Field: <code>${e.affectedField}</code> · Code: <code>${e.errorCode}</code></div>
+          </div>
+          <div class="chev">›</div>
+        `;
+        row.addEventListener("click", () => openErrorModal(e.errorCode));
+        list.appendChild(row);
+      });
+    }
+
+    // ============================================================
+    // Header + callout + status badge update for current item
+    // ============================================================
+    function renderHeader(item) {
+      document.getElementById("bc-gtin").textContent = item.gtin;
+      document.getElementById("hdr-gtin").textContent = item.gtin;
+      document.getElementById("hdr-supplier").textContent = item.supplierName;
+      document.getElementById("hdr-submission").textContent = item.submissionId;
+      document.getElementById("hdr-updated").textContent = fmtTime(item.lastUpdated);
+      document.getElementById("tl-asof").textContent = new Date(item.lastUpdated).toUTCString().replace("GMT", "UTC");
+
+      const b = BADGE_BY_STATUS[item.overallStatus] || BADGE_BY_STATUS.UNKNOWN;
+      const badge = document.getElementById("hdr-status-badge");
+      badge.className = `badge badge-large ${b.cls}`;
+      badge.textContent = b.label;
+
+      const callout = document.getElementById("callout");
+      const calloutText = document.getElementById("callout-text");
+      const icon = callout.querySelector(".icon");
+      callout.className = "callout " +
+        (item.overallStatus === "FAILED" ? "callout-failed" :
+         item.overallStatus === "PARTIAL" ? "callout-warning" : "callout-success");
+      icon.textContent =
+        item.overallStatus === "FAILED" ? "❌" :
+        item.overallStatus === "PARTIAL" ? "⚠" : "✓";
+      calloutText.textContent = item.nextAction;
+    }
+
+    // ============================================================
+    // Error detail modal (Screen 3)
+    // ============================================================
+    const CAT_BADGE_BY_CATEGORY = {
+      SUPPLIER_FIXABLE:    "badge-cat-supplier",
+      KROGER_INVESTIGATING:"badge-cat-investigating",
+      REQUIRES_DIAGNOSIS:  "badge-cat-diagnosis"
+    };
+
+    function openErrorModal(errorCode) {
+      const e = MOCK.ERRORS[errorCode];
+      if (!e) return;
+
+      document.getElementById("modal-icon").textContent = e.icon || "⚠️";
+      document.getElementById("modal-title").textContent = e.plainLanguageMessage;
+      document.getElementById("modal-explanation").textContent = e.plainLanguageMessage;
+      document.getElementById("modal-field").textContent = e.affectedField;
+      document.getElementById("modal-fix-summary").textContent = e.fixGuidance.summary;
+
+      const catBadge = document.getElementById("modal-cat-badge");
+      catBadge.className = "badge modal-cat " + (CAT_BADGE_BY_CATEGORY[e.category] || "badge-cat-supplier");
+      catBadge.textContent = e.categoryLabel;
+
+      const stepsEl = document.getElementById("modal-fix-steps");
+      stepsEl.innerHTML = "";
+      e.fixGuidance.steps.forEach((s) => {
+        const li = document.createElement("li");
+        li.textContent = s;
+        stepsEl.appendChild(li);
+      });
+
+      const tbody = document.getElementById("modal-spec-table");
+      tbody.innerHTML = "";
+      Object.entries(e.fixGuidance.requirements).forEach(([k, v]) => {
+        tbody.insertAdjacentHTML("beforeend", `<tr><td>${k}</td><td><b>${v}</b></td></tr>`);
+      });
+
+      // Examples panel only relevant to image errors — hide otherwise
+      const examplesSection = document.getElementById("modal-examples-section");
+      examplesSection.style.display = errorCode.includes("IMG") ? "" : "none";
+
+      document.getElementById("modal-kb-link").href = e.knowledgeBaseLink;
+      document.getElementById("modal-backdrop").classList.add("open");
+    }
+
+    function closeModal() {
+      document.getElementById("modal-backdrop").classList.remove("open");
+    }
+    document.getElementById("modal-close").addEventListener("click", closeModal);
+    document.getElementById("modal-got-it").addEventListener("click", closeModal);
+    document.getElementById("modal-create-case").addEventListener("click", () => {
+      closeModal();
+      alert("Prototype: would route to case creation form (UC-A05) pre-filled with this error context.");
+    });
+    document.getElementById("modal-backdrop").addEventListener("click", (e) => {
+      if (e.target.id === "modal-backdrop") closeModal();
+    });
+
+    // ============================================================
+    // Scenario switcher — re-render whole page for chosen scenario
+    // ============================================================
+    function renderScenario(key) {
+      const item = MOCK.ITEMS[key];
+      renderHeader(item);
+      renderTimeline(item);
+      renderBanners(item);
+      renderErrors(item);
+    }
+
+    document.getElementById("scenario-chips").addEventListener("click", (e) => {
+      const chip = e.target.closest(".scenario-chip");
+      if (!chip) return;
+      document.querySelectorAll(".scenario-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      renderScenario(chip.dataset.scenario);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Allow ?scenario=ERROR style deep-links from landing page
+    const urlScenario = new URLSearchParams(location.search).get("scenario");
+    if (urlScenario && MOCK.ITEMS[urlScenario]) {
+      document.querySelectorAll(".scenario-chip").forEach(c =>
+        c.classList.toggle("active", c.dataset.scenario === urlScenario)
+      );
+      renderScenario(urlScenario);
+    } else {
+      renderScenario("HAPPY");
+    }
+  </script>
+</body>
+</html>
