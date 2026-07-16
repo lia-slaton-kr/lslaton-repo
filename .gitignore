@@ -1,1 +1,14 @@
-node_modules
+# Dependencies
+node_modules/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / OS noise
+Thumbs.db
+*.swp
+*~
+
+# Logs
+*.log

@@ -1,0 +1,2 @@
+const e=({messageKind:e,messageVariant:n,messageInverseState:s})=>e==="subtle"&&n==="fill"&&!s?"fill":"minimal";const n=({messageInverseState:e,messageKind:n,messageVariant:s})=>/dominant|prominent/gi.test(n)&&s==="fill"?!e:e;const s=({buttonInverseState:e,buttonKind:n})=>/dominant|prominent/gi.test(n)?!e:e;export{n as a,e as d,s as l};
+//# sourceMappingURL=p-d844f1d8.js.map
