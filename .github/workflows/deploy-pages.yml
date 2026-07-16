@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+# Publishes only the site folder (AI-Training/new-project) so the
+# deployed root is that folder — giving a clean URL:
+#   https://krogertechnology.github.io/lslaton-repo/
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "AI-Training/new-project/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:        # lets you run it manually from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deploy at a time; newer runs supersede in-progress ones.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site (only the project folder)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: AI-Training/new-project
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
