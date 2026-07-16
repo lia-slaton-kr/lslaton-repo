@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Status — KIA Support (Supplier)</title>
+  <!-- KDS / mx-web-components: global tokens + component loader (loaded before app styles) -->
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -16,9 +21,10 @@
       <span class="logo">K</span>
       <span>KIA Support</span>
     </a>
-    <span class="topnav-context">Logged in as <b>j.smith@krafheinz.com</b> (Supplier)</span>
+    <span class="topnav-context">Logged in as <b>john.smith@krafheinz.com</b> (Supplier)</span>
     <div class="topnav-links">
-      <a href="supplier.html" class="active">Supplier view</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="create-case.html">+ New case</a>
       <a href="agent.html">Agent view</a>
     </div>
   </nav>
@@ -27,8 +33,8 @@
 
     <!-- Breadcrumbs -->
     <div class="breadcrumbs">
-      <a href="index.html">Dashboard</a><span class="sep">›</span>
-      <a href="#">Recent items</a><span class="sep">›</span>
+      <a href="dashboard.html">Dashboard</a><span class="sep">›</span>
+      <a href="dashboard.html">Recent items</a><span class="sep">›</span>
       <span id="bc-gtin">00012345678905</span>
     </div>
 
@@ -57,7 +63,7 @@
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <span id="hdr-status-badge" class="badge badge-large badge-progress">⏳ In progress</span>
-          <button class="btn btn-primary" onclick="alert('Prototype: would open the case creation form (UC-A05)')">+ Create Support Case</button>
+          <kds-button kind="primary" id="hdr-create-case" onclick="location.href='create-case.html'">+ Create Support Case</kds-button>
         </div>
       </div>
     </section>
@@ -174,8 +180,8 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn" id="modal-create-case">Create Support Case</button>
-        <button class="btn btn-primary" id="modal-got-it">Got it</button>
+        <kds-button kind="secondary" id="modal-create-case">Create Support Case</kds-button>
+        <kds-button kind="primary" id="modal-got-it">Got it</kds-button>
       </div>
     </div>
   </div>
@@ -318,6 +324,8 @@
       document.getElementById("hdr-submission").textContent = item.submissionId;
       document.getElementById("hdr-updated").textContent = fmtTime(item.lastUpdated);
       document.getElementById("tl-asof").textContent = new Date(item.lastUpdated).toUTCString().replace("GMT", "UTC");
+      const createCaseBtn = document.getElementById("hdr-create-case");
+      createCaseBtn.onclick = () => { location.href = `create-case.html?gtin=${encodeURIComponent(item.gtin)}`; };
 
       const b = BADGE_BY_STATUS[item.overallStatus] || BADGE_BY_STATUS.UNKNOWN;
       const badge = document.getElementById("hdr-status-badge");
@@ -388,7 +396,8 @@
     document.getElementById("modal-got-it").addEventListener("click", closeModal);
     document.getElementById("modal-create-case").addEventListener("click", () => {
       closeModal();
-      alert("Prototype: would route to case creation form (UC-A05) pre-filled with this error context.");
+      const gtin = document.getElementById("hdr-gtin").textContent;
+      location.href = `create-case.html?gtin=${encodeURIComponent(gtin)}`;
     });
     document.getElementById("modal-backdrop").addEventListener("click", (e) => {
       if (e.target.id === "modal-backdrop") closeModal();

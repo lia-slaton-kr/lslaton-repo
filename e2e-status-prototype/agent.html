@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Diagnostic Detail — KIA Support (Agent)</title>
+  <!-- KDS / mx-web-components: global tokens + component loader (loaded before app styles) -->
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -18,7 +23,7 @@
     </a>
     <span class="topnav-context">Agent <b>J. Patel</b> · Banner IT</span>
     <div class="topnav-links">
-      <a href="supplier.html">Supplier view</a>
+      <a href="dashboard.html">Supplier view</a>
       <a href="agent.html" class="active">Agent view</a>
     </div>
   </nav>
@@ -53,18 +58,18 @@
 
       <!-- Action bar (UC-A06 / UC-A13: agent fix actions, all logged) -->
       <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-primary" onclick="logAction('Requested Harris Teeter cache invalidation')">
+        <kds-button kind="primary" onclick="logAction('Requested Harris Teeter cache invalidation')">
           🔄 Request Harris Teeter Cache Invalidation
-        </button>
-        <button class="btn" onclick="logAction('Forced PDP refresh for Kroger.com')">
+        </kds-button>
+        <kds-button kind="secondary" onclick="logAction('Forced PDP refresh for Kroger.com')">
           ↻ Force PDP Refresh
-        </button>
-        <button class="btn" onclick="logAction('Escalated to Engineering for systemic fix')">
+        </kds-button>
+        <kds-button kind="secondary" onclick="logAction('Escalated to Engineering for systemic fix')">
           ↑ Escalate to Engineering
-        </button>
-        <button class="btn" onclick="logAction('Marked case Pending Verification; supplier notified')">
+        </kds-button>
+        <kds-button kind="secondary" onclick="logAction('Marked case Pending Verification; supplier notified')">
           ✓ Mark Pending Verification
-        </button>
+        </kds-button>
       </div>
     </section>
 
@@ -114,8 +119,8 @@
             <div class="team" id="routing-team">Banner IT</div>
             <div class="reason" id="routing-reason"></div>
             <div style="margin-top:10px; display:flex; gap:6px;">
-              <button class="btn btn-primary btn-sm" onclick="logAction('Auto-routed to Banner IT')">Auto-route</button>
-              <button class="btn btn-sm" onclick="alert('Prototype: would open manual override dialog with reason capture.')">Override</button>
+              <kds-button kind="primary" compact onclick="logAction('Auto-routed to Banner IT')">Auto-route</kds-button>
+              <kds-button kind="secondary" compact onclick="alert('Prototype: would open manual override dialog with reason capture.')">Override</kds-button>
             </div>
           </div>
         </section>
@@ -133,9 +138,9 @@
             <li><a href="#">CASE-2026-04-0032</a> — Apr 04</li>
             <li><b>CASE-2026-05-0001</b> — May 15 (current)</li>
           </ul>
-          <button class="btn btn-sm" style="margin-top:10px;" onclick="alert('Prototype: would open RCA workflow (UC-A08).')">
+          <kds-button kind="secondary" compact style="margin-top:10px;" onclick="alert('Prototype: would open RCA workflow (UC-A08).')">
             Open RCA Workflow
-          </button>
+          </kds-button>
         </section>
 
         <!-- Banner health (UC-A13) -->

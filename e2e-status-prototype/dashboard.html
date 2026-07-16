@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — KIA Support (Supplier)</title>
+  <!-- KDS / mx-web-components: global tokens + component loader (loaded before app styles) -->
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="index.html" class="topnav-brand">
+      <span class="logo">K</span>
+      <span>KIA Support</span>
+    </a>
+    <span class="topnav-context">Logged in as <b>john.smith@krafheinz.com</b> (Supplier)</span>
+    <div class="topnav-links">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="create-case.html">+ New case</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- ============================================================
+         Hero search (UC-A01 entry point)
+         ============================================================ -->
+    <section class="search-hero">
+      <h1>Find an item</h1>
+      <p>Search by GTIN or submission ID to see end-to-end pipeline status, errors, and banner availability.</p>
+      <form class="search-box" id="search-form" onsubmit="return onSearch(event)">
+        <kds-input
+          id="search-input"
+          type="text"
+          placeholder="00012345678905 or SUB-2026-05-12345"
+          autocomplete="off"
+          autofocus
+        ></kds-input>
+        <kds-button kind="primary" type="submit">Search</kds-button>
+      </form>
+      <div class="search-hint">
+        Try <code>00012345678905</code>, <code>00087692000044</code>, or <code>00087692000825</code> to view the demo scenarios.
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Recent items table (Screen 1)
+         Filter chips at top filter the table inline.
+         ============================================================ -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">Recent Items</h3>
+        <span style="color:var(--gray-500); font-size:12px;" id="row-count"></span>
+      </div>
+
+      <!-- Filter chips — counts populated by JS -->
+      <div class="filter-row" id="filter-row">
+        <span class="label">Status</span>
+        <button class="filter-chip active" data-filter="ALL">All <span class="count" data-count="ALL"></span></button>
+        <button class="filter-chip" data-filter="IN_PROGRESS">In progress <span class="count" data-count="IN_PROGRESS"></span></button>
+        <button class="filter-chip" data-filter="FAILED">Failed <span class="count" data-count="FAILED"></span></button>
+        <button class="filter-chip" data-filter="PARTIAL">Partial <span class="count" data-count="PARTIAL"></span></button>
+        <button class="filter-chip" data-filter="STALLED">Stalled <span class="count" data-count="STALLED"></span></button>
+        <button class="filter-chip" data-filter="COMPLETED">Completed <span class="count" data-count="COMPLETED"></span></button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="items" id="items-table">
+          <thead>
+            <tr>
+              <th>GTIN</th>
+              <th>Supplier</th>
+              <th>Current Stage</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="items-tbody"></tbody>
+        </table>
+        <div class="empty-state" id="empty-state" style="display:none;">
+          <div class="glyph">🔍</div>
+          <div>No items match your filter.</div>
+        </div>
+      </div>
+
+      <div class="proto-note">
+        <b>Note:</b> Only items with GTIN <code>00012345678905</code>, <code>00087692000044</code>, or <code>00087692000825</code>
+        have full timeline data wired up. Others are listing-only for demo realism.
+      </div>
+    </section>
+
+  </main>
+
+  <script src="mock-data.js"></script>
+  <script>
+    // ============================================================
+    // Status badge mapping
+    // ============================================================
+    const BADGE_BY_STATUS = {
+      COMPLETED:   { cls: "badge-success",  label: "✓ Completed" },
+      IN_PROGRESS: { cls: "badge-progress", label: "⏳ In progress" },
+      FAILED:      { cls: "badge-failed",   label: "❌ Failed" },
+      PARTIAL:     { cls: "badge-warning",  label: "⚠ Partial" }
+    };
+
+    function fmtTime(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      const now = new Date();
+      const hoursAgo = Math.floor((now - d) / (1000 * 60 * 60));
+      if (hoursAgo < 1) return "just now";
+      if (hoursAgo < 24) return `${hoursAgo}h ago`;
+      const daysAgo = Math.floor(hoursAgo / 24);
+      if (daysAgo < 7) return `${daysAgo}d ago`;
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    }
+
+    // ============================================================
+    // Filtering — current state lives in a single variable
+    // ============================================================
+    let currentFilter = "ALL";
+
+    function matchesFilter(item, filter) {
+      if (filter === "ALL") return true;
+      if (filter === "STALLED") return item.stalled === true;
+      return item.overallStatus === filter;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("items-tbody");
+      const empty = document.getElementById("empty-state");
+      const rows = MOCK.RECENT_ITEMS.filter(item => matchesFilter(item, currentFilter));
+
+      tbody.innerHTML = "";
+      rows.forEach(item => {
+        const badge = BADGE_BY_STATUS[item.overallStatus] || BADGE_BY_STATUS.IN_PROGRESS;
+        const clickable = !!item.scenarioKey; // only items with a scenario route to detail
+        const tr = document.createElement("tr");
+        if (clickable) tr.className = "clickable";
+        tr.innerHTML = `
+          <td><span class="gtin">${item.gtin}</span></td>
+          <td>${item.supplierName}</td>
+          <td>${item.currentStage}${item.stalled ? '<span class="stalled-flag">⚠ STALLED</span>' : ""}</td>
+          <td><span class="badge ${badge.cls}">${badge.label}</span></td>
+          <td style="color:var(--gray-600);">${fmtTime(item.lastUpdated)}</td>
+          <td style="text-align:right;">
+            ${clickable
+              ? `<a class="action-link" href="supplier.html?scenario=${item.scenarioKey}">View details →</a>`
+              : `<span style="color:var(--gray-400); font-size:12px;">(prototype: listing only)</span>`}
+          </td>
+        `;
+        if (clickable) {
+          tr.addEventListener("click", (e) => {
+            if (e.target.tagName === "A") return;
+            location.href = `supplier.html?scenario=${item.scenarioKey}`;
+          });
+        }
+        tbody.appendChild(tr);
+      });
+
+      empty.style.display = rows.length === 0 ? "" : "none";
+      document.getElementById("row-count").textContent =
+        `${rows.length} of ${MOCK.RECENT_ITEMS.length} items`;
+    }
+
+    function renderFilterCounts() {
+      const counts = { ALL: MOCK.RECENT_ITEMS.length, STALLED: 0, IN_PROGRESS: 0, FAILED: 0, PARTIAL: 0, COMPLETED: 0 };
+      MOCK.RECENT_ITEMS.forEach(item => {
+        if (item.stalled) counts.STALLED++;
+        if (counts[item.overallStatus] !== undefined) counts[item.overallStatus]++;
+      });
+      Object.entries(counts).forEach(([k, v]) => {
+        const el = document.querySelector(`[data-count="${k}"]`);
+        if (el) el.textContent = v;
+      });
+    }
+
+    document.getElementById("filter-row").addEventListener("click", (e) => {
+      const chip = e.target.closest(".filter-chip");
+      if (!chip) return;
+      document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      currentFilter = chip.dataset.filter;
+      renderTable();
+    });
+
+    // ============================================================
+    // Search — exact GTIN match navigates to detail; otherwise
+    // filter the table by GTIN substring or supplier name.
+    // ============================================================
+    function onSearch(e) {
+      e.preventDefault();
+      const q = document.getElementById("search-input").value.trim();
+      if (!q) return false;
+
+      // Exact GTIN match → go straight to detail
+      const direct = MOCK.ITEMS_BY_GTIN[q];
+      if (direct) {
+        location.href = `supplier.html?scenario=${direct.scenarioKey}`;
+        return false;
+      }
+
+      // Otherwise filter the table by substring (GTIN or supplier name)
+      const tbody = document.getElementById("items-tbody");
+      const empty = document.getElementById("empty-state");
+      const ql = q.toLowerCase();
+      const rows = MOCK.RECENT_ITEMS.filter(item =>
+        item.gtin.includes(q) || item.supplierName.toLowerCase().includes(ql)
+      );
+      tbody.innerHTML = "";
+      rows.forEach(item => {
+        const badge = BADGE_BY_STATUS[item.overallStatus] || BADGE_BY_STATUS.IN_PROGRESS;
+        const clickable = !!item.scenarioKey;
+        tbody.insertAdjacentHTML("beforeend", `
+          <tr ${clickable ? 'class="clickable" onclick="location.href=\'supplier.html?scenario=' + item.scenarioKey + '\'"' : ""}>
+            <td><span class="gtin">${item.gtin}</span></td>
+            <td>${item.supplierName}</td>
+            <td>${item.currentStage}</td>
+            <td><span class="badge ${badge.cls}">${badge.label}</span></td>
+            <td style="color:var(--gray-600);">${fmtTime(item.lastUpdated)}</td>
+            <td style="text-align:right;">${clickable ? `<a class="action-link" href="supplier.html?scenario=${item.scenarioKey}">View →</a>` : '<span style="color:var(--gray-400); font-size:12px;">(listing only)</span>'}</td>
+          </tr>
+        `);
+      });
+      empty.style.display = rows.length === 0 ? "" : "none";
+      document.getElementById("row-count").textContent =
+        `${rows.length} match${rows.length === 1 ? "" : "es"} for "${q}"`;
+
+      // Deselect status filter chips since we're now in search mode
+      document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+      return false;
+    }
+
+    // ============================================================
+    // Init
+    // ============================================================
+    renderFilterCounts();
+    renderTable();
+  </script>
+</body>
+</html>

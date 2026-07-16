@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mx-web-components": {
+      "command": "node",
+      "args": [
+        "node_modules/mx-web-components/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}

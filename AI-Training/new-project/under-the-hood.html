@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under the Hood — So about this AI stuff…</title>
+  <meta name="description" content="How AI actually works, explained with analogies — for designers." />
+
+  <!-- KDS / mx-web-components: reset + light theme tokens + components + loader -->
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
+
+  <link rel="stylesheet" href="under-the-hood.css" />
+  <link rel="stylesheet" href="glossary-popover.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <header class="site-head">
+      <span class="wordmark">so about this AI stuff<span class="ellipsis">…</span></span>
+      <a class="home-link" href="index.html">← Home</a>
+    </header>
+
+    <!-- Layer intro -->
+    <div class="layer-head">
+      <p class="layer-kicker">Layer 2 of 4</p>
+      <h1 class="layer-title">Under the Hood</h1>
+      <p class="layer-sub">How does this actually work?</p>
+    </div>
+
+    <!-- Persistent stepper / jump nav -->
+    <nav class="stepper" id="stepper" aria-label="Concepts in this layer">
+      <button type="button" class="step-tab" data-goto="0"><span class="n">1</span><span class="label">What is a model</span></button>
+      <button type="button" class="step-tab" data-goto="1"><span class="n">2</span><span class="label">Platforms vs Models</span></button>
+      <button type="button" class="step-tab" data-goto="2"><span class="n">3</span><span class="label">Tokens</span></button>
+      <button type="button" class="step-tab" data-goto="3"><span class="n">4</span><span class="label">Context window</span></button>
+      <button type="button" class="step-tab" data-goto="4"><span class="n">5</span><span class="label">MCP</span></button>
+      <button type="button" class="step-tab" data-goto="5"><span class="n">6</span><span class="label">See it in action</span></button>
+    </nav>
+
+    <!-- ==========================================================
+         CONCEPT 1 — What is an AI model, actually?
+         ========================================================== -->
+    <section class="panel" data-step="0" id="model">
+      <p class="concept-eyebrow">Concept 1</p>
+      <h2 class="concept-h" tabindex="-1">What is an AI model, actually?</h2>
+
+      <div class="analogy lead">
+        <span class="glyph" aria-hidden="true">🧠</span>
+        <p>…think of it like a person who read an almost incomprehensible amount of text — books, articles, code, conversations — and got extremely good at pattern-matching what words and ideas tend to follow other words and ideas.</p>
+      </div>
+
+      <div class="prose">
+        <p>Most people think of ChatGPT or Claude as software, like an app. But the more useful mental model is to think of it like a person who read an almost incomprehensible amount of text — books, articles, code, conversations — and got extremely good at pattern-matching what words and ideas tend to follow other words and ideas.</p>
+        <p>When you type something to Claude, it's not "looking up" an answer the way Google does. It's doing something closer to very sophisticated autocomplete — predicting what a useful, coherent response looks like based on everything it absorbed during <span class="gterm" data-term="training">training</span>.</p>
+        <p>That's important because it explains both why AI is impressive and why it sometimes confidently says wrong things. It learned patterns, not facts.</p>
+      </div>
+
+      <div class="panel-nav">
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         CONCEPT 2 — Platforms vs. Models
+         ========================================================== -->
+    <section class="panel" data-step="1" id="platforms" hidden>
+      <p class="concept-eyebrow">Concept 2</p>
+      <h2 class="concept-h" tabindex="-1">Platforms vs. Models — the confusion everyone has</h2>
+
+      <div class="analogy">
+        <span class="glyph" aria-hidden="true">🚗</span>
+        <p>The platform is the car. The model is the engine.</p>
+      </div>
+
+      <div class="prose">
+        <p>Claude is made by a company called Anthropic. But "Claude" is actually a family of different engines — Haiku, Sonnet, Opus — each with different tradeoffs between speed, cost, and capability. When someone says "I'm using Sonnet," they mean they're using a specific version of the Claude engine, usually through a <span class="gterm" data-term="platform">platform</span> like Claude.ai or an <span class="gterm" data-term="api">API</span>.</p>
+        <p>The same logic applies across the industry:</p>
+      </div>
+
+      <table class="kv-table">
+        <thead>
+          <tr><th>Company</th><th><span class="gterm" data-term="model-family">Model Family</span></th><th>Specific Versions</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Anthropic</td><td>Claude</td><td>Haiku / Sonnet / Opus</td></tr>
+          <tr><td>OpenAI</td><td>GPT</td><td>GPT-4o / GPT-4 / etc.</td></tr>
+          <tr><td>Microsoft</td><td>Copilot</td><td class="muted">(runs on OpenAI models)</td></tr>
+          <tr><td>Google</td><td>Gemini</td><td>Gemini Flash / Pro / Ultra</td></tr>
+        </tbody>
+      </table>
+
+      <div class="followup">
+        <span class="tag">The confusing one</span>
+        Microsoft Copilot is a good example of why this gets confusing — it's a platform built by Microsoft, embedded in Office tools, but it actually runs OpenAI's models under the hood. The car is Microsoft's. The engine is OpenAI's.
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         CONCEPT 3 — Tokens
+         ========================================================== -->
+    <section class="panel" data-step="2" id="tokens" hidden>
+      <p class="concept-eyebrow">Concept 3</p>
+      <h2 class="concept-h" tabindex="-1">What are tokens, and why does anyone care?</h2>
+
+      <div class="analogy lead">
+        <span class="glyph" aria-hidden="true">🧩</span>
+        <p>AI doesn't read your text the way you do — word by word. It breaks everything into tokens, which are roughly chunks of text.</p>
+      </div>
+
+      <div class="prose">
+        <p>AI doesn't read your text the way you do — word by word. It breaks everything into <span class="gterm" data-term="token">tokens</span>, which are roughly chunks of text. Sometimes a token is a whole word. Sometimes it's part of a word. Sometimes it's punctuation.</p>
+      </div>
+
+      <div class="token-demo">
+        <div class="token-line">
+          <span class="label">"Unbelievable" might be 3 tokens:</span>
+          <span class="chip">Un</span><span class="chip plus">+</span>
+          <span class="chip">believ</span><span class="chip plus">+</span>
+          <span class="chip">able</span>
+        </div>
+        <div class="token-line">
+          <span class="label">"cat" is probably 1 token:</span>
+          <span class="chip">cat</span>
+        </div>
+        <div class="token-line">
+          <span class="rule">A rough rule of thumb: 1 token ≈ ¾ of a word</span>
+        </div>
+      </div>
+
+      <div class="followup">
+        <span class="tag">Why designers care</span>
+        Why does this matter for you as a designer? Because tokens are the unit of measurement for everything — cost, speed, and most importantly, memory.
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         CONCEPT 4 — The Context Window
+         ========================================================== -->
+    <section class="panel" data-step="3" id="context" hidden>
+      <p class="concept-eyebrow">Concept 4</p>
+      <h2 class="concept-h" tabindex="-1">The context window — the most important concept nobody explains well</h2>
+
+      <div class="analogy">
+        <span class="glyph" aria-hidden="true">🪟</span>
+        <p>Think of the context window like a whiteboard.</p>
+      </div>
+
+      <div class="prose">
+        <p>Everything written on the whiteboard — your prompts, the AI's responses, any documents you've pasted in — takes up space. The <span class="gterm" data-term="context-window">context window</span> is how big that whiteboard is, measured in <a href="#tokens" data-goto="2">tokens</a>.</p>
+        <p>When the whiteboard fills up, older stuff gets erased to make room. This is why a long conversation can feel like the AI "forgot" what you said at the beginning — it literally can't see it anymore.</p>
+        <p>This is also why pasting in a huge document at the start of a conversation matters — it takes up a big chunk of your whiteboard before you've even asked a question.</p>
+      </div>
+
+      <div class="compare">
+        <div class="compare-card">
+          <p class="cap">Small context window</p>
+          <p>shorter memory, cheaper, faster</p>
+        </div>
+        <div class="compare-card pos">
+          <p class="cap">Large context window</p>
+          <p>longer memory, more expensive, slower</p>
+        </div>
+      </div>
+
+      <div class="followup">
+        <span class="tag">The takeaway</span>
+        Different models have different sized whiteboards. This is actually one of the main things that distinguishes a "better" model from a "worse" one — not just smarts, but memory.
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         CONCEPT 5 — MCP
+         ========================================================== -->
+    <section class="panel" data-step="4" id="mcp" hidden>
+      <p class="concept-eyebrow">Concept 5</p>
+      <h2 class="concept-h" tabindex="-1">What's an MCP? (And why designers are starting to care)</h2>
+      <p class="concept-subhead">MCP stands for Model Context Protocol — and it's newer, so don't worry if you haven't heard it.</p>
+
+      <div class="analogy lead">
+        <span class="glyph" aria-hidden="true">📚</span>
+        <p>Think of it like giving someone a library card on top of their existing knowledge.</p>
+      </div>
+
+      <div class="prose">
+        <p>By default, an AI model only knows what's in its <span class="gterm" data-term="training">training</span> data and what's on the <a href="#context" data-goto="3">whiteboard</a> right now. It can't look things up, open your Figma file, or check your company's documentation on its own.</p>
+        <p><span class="gterm" data-term="mcp">MCP</span> is essentially a standardized way to give AI models access to external tools and data sources. Think of it like giving someone a library card on top of their existing knowledge.</p>
+      </div>
+
+      <div class="compare">
+        <div class="compare-card">
+          <p class="cap">Without MCP</p>
+          <p>the AI only knows what it learned and what you typed</p>
+        </div>
+        <div class="compare-card pos">
+          <p class="cap">With MCP</p>
+          <p>the AI can reach out and pull in live information, access files, run searches</p>
+        </div>
+      </div>
+
+      <div class="followup">
+        <span class="tag">Why designers care</span>
+        For designers, this starts to matter when you hear about Claude Code connecting to your file system, or AI tools that can read your design tokens or documentation. That connection is happening through something like MCP.
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next">See it in action →</kds-button>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         STEP 6 — Walkthrough (capstone)
+         ========================================================== -->
+    <section class="panel" data-step="5" id="walkthrough" hidden>
+      <p class="concept-eyebrow">See it in action</p>
+      <h2 class="concept-h" tabindex="-1">How a prompt becomes a reply</h2>
+      <p class="walk-intro">You've met the pieces — tokens, the whiteboard, pattern-matching. Here's how they work together in a single reply.</p>
+
+      <div class="walk-scene">
+        <div class="stations" id="walk-stations">
+          <div class="station" data-station="you"><span class="ic" aria-hidden="true">✍️</span><span class="nm">You</span></div>
+          <div class="station" data-station="tokens"><span class="ic" aria-hidden="true">🧩</span><span class="nm">Tokens</span></div>
+          <div class="station" data-station="whiteboard"><span class="ic" aria-hidden="true">🪟</span><span class="nm">Whiteboard</span></div>
+          <div class="station" data-station="model"><span class="ic" aria-hidden="true">🧠</span><span class="nm">Model</span></div>
+          <div class="station" data-station="reply"><span class="ic" aria-hidden="true">💬</span><span class="nm">Reply</span></div>
+        </div>
+        <div class="walk-stage" id="walk-stage" aria-live="polite"></div>
+      </div>
+
+      <p class="walk-caption" id="walk-caption"></p>
+
+      <!-- MCP optional side-branch (only shown on the whiteboard step) -->
+      <div class="walk-aside" id="walk-aside" hidden>
+        <button type="button" class="aside-toggle" id="aside-toggle" aria-expanded="false">🔎 Want to go deeper? See how MCP fits</button>
+        <div class="aside-body" id="aside-body" hidden>
+          <p class="aside-h">Optional detour — MCP</p>
+          <p>Sometimes the whiteboard isn't enough. With MCP, the model can reach out — open a file, run a search — and pull that onto the whiteboard too.</p>
+          <span class="opt">Totally optional — hit Next any time to stay on the main path.</span>
+        </div>
+      </div>
+
+      <div class="walk-dots" id="walk-dots" aria-hidden="true"></div>
+
+      <div class="walk-controls" id="walk-controls">
+        <kds-button kind="tertiary" id="walk-skip">Skip</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="tertiary" id="walk-back" hidden>← Back</kds-button>
+        <kds-button kind="primary" id="walk-next">Start ▶</kds-button>
+      </div>
+
+      <!-- End / payoff -->
+      <div class="walk-end" id="walk-end" hidden>
+        <div class="analogy">
+          <span class="glyph" aria-hidden="true">💡</span>
+          <p>This is also why it can sound totally confident and still be wrong — it learned patterns, not facts.</p>
+        </div>
+        <div class="walk-end-actions">
+          <kds-button kind="secondary" id="walk-replay">↻ Replay</kds-button>
+          <kds-button kind="tertiary" class="js-back">← Back to concepts</kds-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="layer-foot">
+      <a href="index.html">← Home</a>
+      <span>Layer 2 of 4 · Under the Hood</span>
+      <span style="color:var(--ink-faint);">Layer 3 coming soon</span>
+    </div>
+
+  </div>
+
+  <script src="glossary-data.js"></script>
+  <script src="under-the-hood.js"></script>
+  <script src="glossary-popover.js"></script>
+</body>
+</html>

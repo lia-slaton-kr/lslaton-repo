@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>So About This AI Stuff — a friendly guide to AI for designers</title>
+  <meta name="description" content="A calm, friendly place for designers to catch up on AI — plain-language explanations of the tools, the jargon, and how it applies to design." />
+
+  <!-- KDS / mx-web-components: reset + light theme tokens + components + loader -->
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
+
+  <link rel="stylesheet" href="homepage.css" />
+</head>
+<body>
+
+  <div class="wrap">
+
+    <!-- HEADER -->
+    <header class="site-head">
+      <h1 class="wordmark">So About This AI Stuff</h1>
+      <span class="tagline">Finally, someone just explains it.</span>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1>AI is everywhere. The explanation wasn't included.</h1>
+      <p>AI is suddenly everywhere, and it's easy to feel like everyone got a memo you missed. This is a calm, friendly place to get oriented — plain-language explanations of the tools, the jargon, and how any of it actually applies to design. No prior knowledge assumed, no judgment; poke around wherever you're curious.</p>
+    </section>
+
+    <!-- BROWSE BY TOPIC -->
+    <section class="browse">
+      <h2 class="section-title">Browse by topic</h2>
+      <div class="topic-grid">
+
+        <!-- Layer 1 — live -->
+        <a class="topic-card" href="landscape.html">
+          <span class="tc-emoji" aria-hidden="true">🗺️</span>
+          <span class="tc-head">The Landscape</span>
+          <span class="tc-q">What even is all this?</span>
+          <span class="tc-teaser">The tools, the companies, and why the names are so confusing.</span>
+          <span class="tc-cta">Explore →</span>
+        </a>
+
+        <!-- Layer 2 — live -->
+        <a class="topic-card" href="under-the-hood.html">
+          <span class="tc-emoji" aria-hidden="true">🔧</span>
+          <span class="tc-head">Under the Hood</span>
+          <span class="tc-q">How does this actually work?</span>
+          <span class="tc-teaser">Models, tokens, context windows — the mental models that make it click.</span>
+          <span class="tc-cta">Explore →</span>
+        </a>
+
+        <!-- Layer 3 — coming soon -->
+        <button type="button" class="topic-card muted" data-soon>
+          <span class="tc-badge">Coming soon</span>
+          <span class="tc-emoji" aria-hidden="true">🎯</span>
+          <span class="tc-head">Using It Well</span>
+          <span class="tc-q">How do I get good at this?</span>
+          <span class="tc-teaser">Prompts that work, when to trust it, and where it falls down.</span>
+          <span class="tc-msg" hidden>This one's on the way — check back soon.</span>
+        </button>
+
+        <!-- Layer 4 — live -->
+        <a class="topic-card" href="for-designers.html">
+          <span class="tc-emoji" aria-hidden="true">🎨</span>
+          <span class="tc-head">For Designers</span>
+          <span class="tc-q">How does this apply to my work?</span>
+          <span class="tc-teaser">Research, artifacts, UX writing, and working with Claude Code.</span>
+          <span class="tc-cta">Explore →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- QUIZ OFFER -->
+    <section class="quiz-offer">
+      <div class="qo-card">
+        <span class="qo-mark" aria-hidden="true">✦</span>
+        <div class="qo-text">
+          <h2 class="qo-title">Not sure where to start?</h2>
+          <p class="qo-body">Answer 3 quick questions and we'll point you in the right direction.</p>
+        </div>
+        <kds-button kind="primary" id="open-quiz" data-open-quiz>Find my starting point →</kds-button>
+      </div>
+    </section>
+
+    <!-- GLOSSARY ENTRY POINT -->
+    <section class="glossary-entry">
+      <a class="gloss-card gloss-live" href="glossary.html">
+        <span class="gloss-q">Looking for a specific term?</span>
+        <span class="gloss-teaser">A plain-English glossary you can search — growing alongside the layers.</span>
+        <span class="tc-cta">Browse the glossary →</span>
+      </a>
+    </section>
+
+    <footer class="site-foot">
+      So About This AI Stuff · a friendly guide to AI, made for designers.
+    </footer>
+
+  </div>
+
+  <!-- ============================================================
+       QUIZ DRAWER (right side / bottom sheet on mobile)
+       Non-modal: homepage stays visible & interactive.
+       Dismiss via ✕ or ESC only.
+       ============================================================ -->
+  <aside class="drawer" id="quiz-drawer" role="dialog" aria-modal="false" aria-labelledby="drawer-title" aria-hidden="true">
+    <div class="drawer-head">
+      <span class="drawer-eyebrow" id="drawer-title">Find your starting point</span>
+      <button type="button" class="drawer-close" id="drawer-close" aria-label="Close">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="progress" aria-hidden="true">
+        <span class="dot" data-dot="1"></span>
+        <span class="dot" data-dot="2"></span>
+        <span class="dot" data-dot="3"></span>
+      </div>
+      <p class="step-label" id="step-label" aria-live="polite">Step 1 of 3</p>
+
+      <!-- Step 1 (single select) -->
+      <section class="q-step" data-step="1">
+        <h2 class="q" tabindex="-1">Where are you starting from?</h2>
+        <p class="lede">There's genuinely no wrong answer — this just helps me point you somewhere useful.</p>
+        <div class="opts" role="radiogroup" aria-label="Where are you starting from?">
+          <button type="button" class="opt-card" role="radio" aria-checked="false" data-value="new">
+            <span class="opt-emoji" aria-hidden="true">🌱</span>
+            <span class="opt-text">
+              <span class="opt-title">I've never really used any of these tools</span>
+              <span class="opt-sub">No shame in it — this is where everyone starts.</span>
+            </span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="opt-card" role="radio" aria-checked="false" data-value="some">
+            <span class="opt-emoji" aria-hidden="true">🧭</span>
+            <span class="opt-text">
+              <span class="opt-title">I use them sometimes, but honestly I'm still pretty lost</span>
+              <span class="opt-sub">You've dipped a toe in. Let's fill in the gaps.</span>
+            </span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="opt-card" role="radio" aria-checked="false" data-value="regular">
+            <span class="opt-emoji" aria-hidden="true">🚀</span>
+            <span class="opt-text">
+              <span class="opt-title">I use them regularly — I just want to go deeper</span>
+              <span class="opt-sub">You've got a workflow. Let's make it sharper.</span>
+            </span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 2 (multi select) -->
+      <section class="q-step" data-step="2" hidden>
+        <h2 class="q" tabindex="-1">What do you want to get out of this?</h2>
+        <p class="lede">Pick as many as you like — you can always change your mind later.</p>
+        <div class="opts" role="group" aria-label="What do you want to get out of this?">
+          <button type="button" class="opt-card" role="checkbox" aria-checked="false" data-value="understand">
+            <span class="opt-emoji" aria-hidden="true">💬</span>
+            <span class="opt-text"><span class="opt-title">Understand what everyone's talking about</span></span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="opt-card" role="checkbox" aria-checked="false" data-value="how-it-works">
+            <span class="opt-emoji" aria-hidden="true">⚙️</span>
+            <span class="opt-text"><span class="opt-title">Learn how this stuff actually works</span></span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="opt-card" role="checkbox" aria-checked="false" data-value="day-to-day">
+            <span class="opt-emoji" aria-hidden="true">🛠️</span>
+            <span class="opt-text"><span class="opt-title">Get better at using these tools day-to-day</span></span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="opt-card" role="checkbox" aria-checked="false" data-value="design">
+            <span class="opt-emoji" aria-hidden="true">🎨</span>
+            <span class="opt-text"><span class="opt-title">Know how AI applies to design specifically</span></span>
+            <span class="opt-check" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 3 (result — rendered by JS) -->
+      <section class="q-step" data-step="3" hidden>
+        <p class="reco-eyebrow">Your recommendation</p>
+        <p class="reco-line" id="reco-line"></p>
+        <p class="reco-bridge" id="reco-bridge" hidden></p>
+        <div class="reco-cta">
+          <kds-button kind="primary" id="reco-cta">Explore Under the Hood →</kds-button>
+        </div>
+      </section>
+
+      <!-- nav -->
+      <div class="drawer-nav" id="drawer-nav">
+        <kds-button kind="tertiary" id="q-back" hidden>← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" id="q-continue" disabled>Continue</kds-button>
+      </div>
+    </div>
+  </aside>
+
+  <script src="quiz.js"></script>
+</body>
+</html>

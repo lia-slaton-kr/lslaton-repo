@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Landscape — So About This AI Stuff</title>
+  <meta name="description" content="What even is all this? The tools, the companies, and why the naming is so confusing — explained for designers." />
+
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
+
+  <link rel="stylesheet" href="landscape.css" />
+  <link rel="stylesheet" href="glossary-popover.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <header class="site-head">
+      <span class="wordmark">so about this AI stuff<span class="ellipsis">…</span></span>
+      <a class="home-link" href="index.html">← Home</a>
+    </header>
+
+    <div class="layer-head">
+      <p class="layer-kicker">Layer 1 of 4</p>
+      <h1 class="layer-title">The Landscape</h1>
+      <p class="layer-sub">What even is all this?</p>
+    </div>
+
+    <!-- ===== SECTION 1 STEPPER (1 · 2 · 3 · Compare) ===== -->
+    <nav class="stepper" id="stepper-1" aria-label="Core concepts">
+      <button type="button" class="step-tab" data-goto="0"><span class="n">1</span><span class="label">AI, platforms &amp; models</span></button>
+      <button type="button" class="step-tab" data-goto="1"><span class="n">2</span><span class="label">Who makes what</span></button>
+      <button type="button" class="step-tab" data-goto="2"><span class="n">3</span><span class="label">Model versions</span></button>
+      <button type="button" class="step-tab" data-goto="3"><span class="n">⇄</span><span class="label">Compare</span></button>
+    </nav>
+
+    <!-- ===== CONCEPT 1 ===== -->
+    <section class="panel" data-step="0" id="model">
+      <p class="concept-eyebrow">Concept 1</p>
+      <h2 class="concept-h" tabindex="-1">AI, platforms, and models — three different things</h2>
+      <p class="concept-intro">Before we get into how AI works, it helps to get oriented on the landscape — who's making these tools, what they're actually called, and why the naming is so confusing.</p>
+
+      <div class="analogy">
+        <span class="glyph" aria-hidden="true">🔌</span>
+        <p>AI is electricity. The platform is the appliance. The model is what's inside the appliance that makes it actually work.</p>
+      </div>
+
+      <div class="prose">
+        <p>These three words get used interchangeably, but they mean different things.</p>
+        <p><span class="gterm" data-term="ai">AI</span> is the broad capability — the underlying technology that can understand and generate language. Think of it like electricity. Electricity itself isn't a product; it's what powers products.</p>
+        <p>A <span class="gterm" data-term="platform">platform</span> is the product you actually use — the interface, the app, the thing you log into. ChatGPT is a platform. Claude.ai is a platform. They're the appliances plugged into the electricity.</p>
+        <p>A <span class="gterm" data-term="model">model</span> is the specific engine running inside the platform — the trained system doing the actual thinking. This is where names like GPT-4o or Claude Sonnet come from. They're not products you buy; they're engines that power products.</p>
+      </div>
+
+      <div class="followup">
+        <span class="tag">Why it matters</span>
+        Why does this matter? Because when someone says "I use Claude," they mean the platform. When they say "I'm using Sonnet," they mean the model running inside it. And when they say "this is powered by AI," they mean the broad capability — which tells you almost nothing useful.
+      </div>
+
+      <div class="panel-nav">
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next1">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ===== CONCEPT 2 ===== -->
+    <section class="panel" data-step="1" id="platforms" hidden>
+      <p class="concept-eyebrow">Concept 2</p>
+      <h2 class="concept-h" tabindex="-1">Who makes what</h2>
+
+      <div class="prose"><p>Here's the landscape, laid out cleanly.</p></div>
+
+      <table class="kv-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th><span class="gterm" data-term="platform">Platform(s)</span></th>
+            <th><span class="gterm" data-term="model-family">Model Family</span></th>
+            <th>Versions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Anthropic</td><td>Claude.ai, Claude Code</td><td>Claude</td><td>Haiku · Sonnet · Opus</td></tr>
+          <tr><td>OpenAI</td><td>ChatGPT</td><td>GPT</td><td>GPT-4o · GPT-4 · GPT-3.5</td></tr>
+          <tr><td>Google</td><td>Gemini</td><td>Gemini</td><td>Flash · Pro · Ultra</td></tr>
+          <tr><td>Microsoft</td><td>Copilot, GitHub Copilot</td><td class="muted">(see below)</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="followup">
+        <span class="fu-h">The Copilot exception — why it's confusing</span>
+        <div class="analogy" style="margin:6px 0 14px;">
+          <span class="glyph" aria-hidden="true">🚗</span>
+          <p>Copilot is Microsoft's car with OpenAI's engine inside.</p>
+        </div>
+        <p>Microsoft makes the platform. But Microsoft doesn't make the <span class="gterm" data-term="model">model</span>. Copilot runs on OpenAI's GPT models under the hood — Microsoft licensed the engine and built the car around it.</p>
+        <p>This is why Copilot feels similar to ChatGPT in some ways — they're running the same engine, just with different interfaces and different integrations. Copilot plugs into Office, Teams, and Windows. ChatGPT stands alone.</p>
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back1">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next1">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ===== CONCEPT 3 ===== -->
+    <section class="panel" data-step="2" id="versions" hidden>
+      <p class="concept-eyebrow">Concept 3</p>
+      <h2 class="concept-h" tabindex="-1">What model versions actually mean</h2>
+
+      <div class="analogy">
+        <span class="glyph" aria-hidden="true">🐎</span>
+        <p>Model versions are like horsepower ratings. More isn't always what you need — it depends on what you're trying to do.</p>
+      </div>
+
+      <div class="prose">
+        <p>When you see names like Haiku, Sonnet, Opus — or GPT-4o, GPT-4, GPT-3.5 — they're describing different versions within the same <span class="gterm" data-term="model-family">model family</span>. Each version makes different tradeoffs.</p>
+      </div>
+
+      <p class="concept-eyebrow" style="margin-top:6px;">Within the Claude family</p>
+      <div class="cards3">
+        <div class="ccard">
+          <p class="cc-name">Haiku</p>
+          <p class="cc-desc">Fastest, cheapest, handles simple tasks well.</p>
+          <p class="cc-best"><b>Best for:</b> quick questions, high-volume tasks</p>
+        </div>
+        <div class="ccard">
+          <p class="cc-name">Sonnet</p>
+          <p class="cc-desc">The middle ground — capable and efficient.</p>
+          <p class="cc-best"><b>Best for:</b> most everyday work, coding, writing</p>
+        </div>
+        <div class="ccard">
+          <p class="cc-name">Opus</p>
+          <p class="cc-desc">Most capable, slowest, most expensive.</p>
+          <p class="cc-best"><b>Best for:</b> complex reasoning, nuanced tasks</p>
+        </div>
+      </div>
+
+      <div class="followup">
+        <span class="tag">The takeaway</span>
+        Think of it like coffee sizes, except instead of small/medium/large the tradeoffs are speed, cost, and capability — and bigger isn't always better. If you need a quick answer to a simple question, Haiku will get you there faster and cheaper than Opus would.
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back1">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next1">Compare the tools →</kds-button>
+      </div>
+    </section>
+
+    <!-- ===== COMPARE (Section 1 capstone) ===== -->
+    <section class="panel" data-step="3" id="compare" hidden>
+      <p class="concept-eyebrow">Compare</p>
+      <h2 class="concept-h" tabindex="-1">Compare the tools</h2>
+      <p class="cmp-intro">Pick up to three to see them side by side.</p>
+
+      <div class="cmp-chips" id="cmp-chips" role="group" aria-label="Choose tools to compare"></div>
+      <p class="cmp-msg" id="cmp-msg" role="status" hidden></p>
+
+      <div class="cmp-table-wrap">
+        <table class="cmp-table" id="cmp-table"></table>
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back1">← Back</kds-button>
+        <span class="spacer"></span>
+      </div>
+    </section>
+
+    <!-- ===== GOING DEEPER ===== -->
+    <section class="deeper" id="deeper">
+      <hr class="deeper-rule" />
+      <div class="deeper-head">
+        <h2>Want to go further?</h2>
+        <p class="sub">These concepts come up more in engineering conversations — but understanding them will make you a sharper collaborator.</p>
+      </div>
+
+      <div class="deeper-cta-wrap" id="deeper-cta-wrap">
+        <kds-button kind="primary" id="deeper-open">Keep going →</kds-button>
+      </div>
+
+      <div class="deeper-body" id="deeper-body" hidden>
+        <!-- Going Deeper stepper (4 · 5 · 6) -->
+        <nav class="stepper" id="stepper-2" aria-label="Going deeper">
+          <button type="button" class="step-tab" data-dgoto="0"><span class="n">4</span><span class="label">What is an API?</span></button>
+          <button type="button" class="step-tab" data-dgoto="1"><span class="n">5</span><span class="label">What is an agent?</span></button>
+          <button type="button" class="step-tab" data-dgoto="2"><span class="n">6</span><span class="label">What is CLAUDE.md?</span></button>
+        </nav>
+
+        <!-- ===== CONCEPT 4 ===== -->
+        <section class="panel" data-dstep="0" id="api">
+          <p class="concept-eyebrow">Concept 4</p>
+          <h2 class="concept-h" tabindex="-1">What is an API?</h2>
+          <p class="concept-intro">You'll hear this word constantly and it's simpler than it sounds.</p>
+
+          <div class="analogy">
+            <span class="glyph" aria-hidden="true">🧑‍🍳</span>
+            <p>An API is like a waiter. You don't go into the kitchen yourself. You tell the waiter what you want, the kitchen makes it, and the waiter brings it back.</p>
+          </div>
+
+          <div class="prose">
+            <p><span class="gterm" data-term="api">API</span> stands for Application Programming Interface — but forget the acronym. Here's what it actually means.</p>
+            <p>An API is a way for one piece of software to talk to another. When a product says it's "powered by Claude" or "uses GPT-4," they built their product by connecting to Anthropic's or OpenAI's API. They're not running the <span class="gterm" data-term="model">model</span> themselves — they're sending requests to it and getting responses back.</p>
+          </div>
+
+          <div class="followup">
+            <span class="tag">For designers</span>
+            For designers, the practical implication is this: when you use Claude.ai, you're using Anthropic's own interface. When you use a design tool that has AI built in — like Figma's AI features — that tool is probably talking to a model via API behind the scenes. Same model, different interface.
+          </div>
+
+          <div class="panel-nav">
+            <span class="spacer"></span>
+            <kds-button kind="primary" class="js-nextD">Next →</kds-button>
+          </div>
+        </section>
+
+        <!-- ===== CONCEPT 5 ===== -->
+        <section class="panel" data-dstep="1" id="agent" hidden>
+          <p class="concept-eyebrow">Concept 5</p>
+          <h2 class="concept-h" tabindex="-1">What is an agent?</h2>
+          <p class="concept-intro">This one is newer and you'll hear it more and more.</p>
+
+          <div class="analogy">
+            <span class="glyph" aria-hidden="true">📋</span>
+            <p>A regular AI interaction is like asking someone a question. An agent is like delegating a task.</p>
+          </div>
+
+          <div class="prose">
+            <p>Most AI interactions are reactive — you ask, it answers. An <span class="gterm" data-term="agent">agent</span> is different. An agent is an AI that can take a sequence of actions on its own to accomplish a goal, not just respond to a single <span class="gterm" data-term="prompt">prompt</span>.</p>
+          </div>
+
+          <div class="cards2">
+            <div class="ccard dialog">
+              <p class="cc-role">Regular AI interaction</p>
+              <p class="cc-line"><b>You:</b> "Write me a research plan for this project."</p>
+              <p class="cc-line"><b>AI:</b> [writes the research plan]</p>
+              <p class="cc-done">Done.</p>
+            </div>
+            <div class="ccard dialog">
+              <p class="cc-role">Agent</p>
+              <p class="cc-line"><b>You:</b> "Research this topic and summarize the key findings for me."</p>
+              <p class="cc-line"><b>Agent:</b> searches the web → reads sources → synthesizes findings → writes summary → flags anything that needs your review</p>
+              <p class="cc-done">Done — but it did several steps on its own.</p>
+            </div>
+          </div>
+
+          <div class="followup">
+            <span class="tag">For designers</span>
+            For designers, agents are starting to matter because tools like Claude Code operate more like agents — you give them a goal, and they take a series of steps to get there, rather than just answering a single question.
+          </div>
+
+          <div class="panel-nav">
+            <kds-button kind="tertiary" class="js-backD">← Back</kds-button>
+            <span class="spacer"></span>
+            <kds-button kind="primary" class="js-nextD">Next →</kds-button>
+          </div>
+        </section>
+
+        <!-- ===== CONCEPT 6 ===== -->
+        <section class="panel" data-dstep="2" id="claude-md" hidden>
+          <p class="concept-eyebrow">Concept 6</p>
+          <h2 class="concept-h" tabindex="-1">What is a CLAUDE.md?</h2>
+          <p class="concept-intro">This one is specific to working with Claude Code, but worth knowing because you'll see it referenced in engineering conversations.</p>
+
+          <div class="analogy">
+            <span class="glyph" aria-hidden="true">📄</span>
+            <p>Think of CLAUDE.md like an onboarding doc you wrote for a new team member — except the team member reads it perfectly every single time and never forgets it.</p>
+          </div>
+
+          <div class="prose">
+            <p>A <span class="gterm" data-term="claude-md">CLAUDE.md</span> is a file you create in your project that gives Claude persistent instructions. Instead of explaining your project's rules and preferences every single conversation, you write them down once in a CLAUDE.md file and Claude reads it automatically every time it works in that project.</p>
+          </div>
+
+          <div class="followup">
+            <span class="tag">For designers</span>
+            For designers working with Claude Code, this is the practical implication: the more you encode your team's standards and knowledge into files like CLAUDE.md, the less you have to re-explain context every session. Your preferences become infrastructure.
+          </div>
+
+          <div class="panel-nav">
+            <kds-button kind="tertiary" class="js-backD">← Back</kds-button>
+            <span class="spacer"></span>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div class="layer-foot">
+      <a href="index.html">← Home</a>
+      <span>Layer 1 of 4 · The Landscape</span>
+      <a href="under-the-hood.html">Next: Under the Hood →</a>
+    </div>
+
+  </div>
+
+  <script src="glossary-data.js"></script>
+  <script src="landscape.js"></script>
+  <script src="glossary-popover.js"></script>
+</body>
+</html>

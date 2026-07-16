@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KIA Support — E2E Status Prototype</title>
+  <!-- KDS / mx-web-components: global tokens + component loader (loaded before app styles) -->
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -13,9 +18,9 @@
       <span class="logo">K</span>
       <span>KIA Support — Vision Prototype</span>
     </a>
-    <span class="topnav-context">Foundational triad: UC-A01, UC-A03, UC-A06</span>
+    <span class="topnav-context">Vision prototype — UC-A01, UC-A03, UC-A05, UC-A06</span>
     <div class="topnav-links">
-      <a href="supplier.html">Supplier view</a>
+      <a href="dashboard.html">Dashboard</a>
       <a href="agent.html">Agent view</a>
     </div>
   </nav>
@@ -31,24 +36,44 @@
       </p>
     </div>
 
-    <!-- Two main entry points -->
+    <!-- Main entry points -->
     <div class="landing-cards">
+      <a href="dashboard.html" class="landing-card">
+        <span class="tag tag-supplier">Supplier</span>
+        <h2>Dashboard & Search →</h2>
+        <p>
+          Search by GTIN or browse recent items filtered by status (in progress, failed,
+          stalled, partial, completed).
+        </p>
+        <div class="uc">UC-A01 (entry point)</div>
+      </a>
+
       <a href="supplier.html" class="landing-card">
         <span class="tag tag-supplier">Supplier</span>
         <h2>Item Status Detail →</h2>
         <p>
-          A supplier searches a GTIN and sees the full pipeline timeline with explicit
-          NULL states, banner-by-banner status, and plain-language errors.
+          Pipeline timeline with explicit NULL states, banner-by-banner status,
+          and plain-language errors.
         </p>
         <div class="uc">UC-A01 · UC-A03 · UC-A13</div>
+      </a>
+
+      <a href="create-case.html" class="landing-card">
+        <span class="tag tag-supplier">Supplier</span>
+        <h2>Create Support Case →</h2>
+        <p>
+          Guided intake form: pre-filled context, banner selection, urgency, and a
+          confirmation screen showing routing and SLA.
+        </p>
+        <div class="uc">UC-A05</div>
       </a>
 
       <a href="agent.html" class="landing-card">
         <span class="tag tag-agent">Internal</span>
         <h2>Agent Diagnostic View →</h2>
         <p>
-          An agent opens a Harris Teeter cache case and sees the cross-system timeline
-          with logs, routing suggestion, chronic-issue alert, and audited fix actions.
+          Cross-system timeline with logs, routing suggestion, chronic-issue alert,
+          and audited fix actions.
         </p>
         <div class="uc">UC-A06 · UC-A07 · UC-A08 · UC-A13</div>
       </a>
@@ -88,10 +113,10 @@
     </section>
 
     <div class="proto-note" style="margin-top:24px;">
-      <b>Scope of this prototype:</b> Foundational triad screens only —
-      Supplier Status Detail (Screen 2), Error Detail Modal (Screen 3), Agent Diagnostic Detail (Screen 6).
-      Other screens in the brief (dashboard search, case creation form, banner health dashboard, notification preferences)
-      are referenced via stubs that surface a placeholder when clicked.
+      <b>Scope of this prototype:</b> Dashboard search (Screen 1), Item Status Detail (Screen 2),
+      Error Detail Modal (Screen 3), Case Creation Form (Screen 4), and Agent Diagnostic Detail (Screen 6).
+      Remaining brief screens — Agent Dashboard / Case Queue (Screen 5), Banner Health Dashboard (Screen 7),
+      and Notification Preferences — are not yet wired.
     </div>
 
   </main>

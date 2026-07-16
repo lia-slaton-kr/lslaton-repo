@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Support Case — KIA Support (Supplier)</title>
+  <!-- KDS / mx-web-components: global tokens + component loader (loaded before app styles) -->
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="index.html" class="topnav-brand">
+      <span class="logo">K</span>
+      <span>KIA Support</span>
+    </a>
+    <span class="topnav-context">Logged in as <b>john.smith@krafheinz.com</b> (Supplier)</span>
+    <div class="topnav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="create-case.html" class="active">+ New case</a>
+    </div>
+  </nav>
+
+  <main class="page" style="max-width: 800px;">
+
+    <div class="breadcrumbs">
+      <a href="dashboard.html">Dashboard</a><span class="sep">›</span>
+      <a href="#" onclick="history.back(); return false;">Item status</a><span class="sep">›</span>
+      <span>Create support case</span>
+    </div>
+
+    <!-- ============================================================
+         FORM STATE — visible until submitted
+         ============================================================ -->
+    <section class="card" id="form-state">
+      <div class="card-header" style="display:block;">
+        <h2 style="margin:0 0 4px; font-size:20px; color:var(--gray-900);">Create a support case</h2>
+        <p style="margin:0; color:var(--gray-500); font-size:13px;">
+          We'll pre-fill what we know and route it to the right team automatically.
+        </p>
+      </div>
+
+      <!-- Pre-filled context (read-only) — only renders if ?gtin=… was passed -->
+      <div class="context-box" id="context-box" style="display:none;">
+        <div class="label">Context (auto-filled from item)</div>
+        <div class="row">
+          <span>GTIN <b id="ctx-gtin"></b></span>
+          <span>Supplier <b id="ctx-supplier"></b></span>
+        </div>
+        <div class="row">
+          <span>Current stage <b id="ctx-stage"></b></span>
+          <span>Status <span id="ctx-status-badge" class="badge"></span></span>
+        </div>
+        <div class="row" id="ctx-error-row" style="display:none;">
+          <span>Detected issue <b id="ctx-error"></b></span>
+        </div>
+      </div>
+
+      <form id="case-form" onsubmit="return submitCase(event)">
+
+        <!-- =====================================================
+             Issue details (guided questions)
+             ===================================================== -->
+        <div class="form-section">
+          <h3>Issue details</h3>
+          <p class="sub">Help us route this to the right team faster.</p>
+
+          <div class="field">
+            <label>Which banner(s) are affected? <span class="req">*</span></label>
+            <div class="opt-group" id="banner-group">
+              <kds-checkbox name="banners" value="KROGER_COM">Kroger.com</kds-checkbox>
+              <kds-checkbox name="banners" value="HARRIS_TEETER">Harris Teeter</kds-checkbox>
+              <kds-checkbox name="banners" value="FRED_MEYER">Fred Meyer</kds-checkbox>
+              <kds-checkbox name="banners" value="ALL">All banners</kds-checkbox>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Have you tried resubmitting the item? <span class="req">*</span></label>
+            <div class="opt-group">
+              <kds-radio name="resubmit" value="yes" required>Yes</kds-radio>
+              <kds-radio name="resubmit" value="no">No</kds-radio>
+              <kds-radio name="resubmit" value="na">Not applicable</kds-radio>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="description">Describe the issue <span class="req">*</span></label>
+            <kds-textarea
+              id="description"
+              name="description"
+              required
+              placeholder="What did you expect to see, and what's actually happening?"
+            ></kds-textarea>
+          </div>
+        </div>
+
+        <!-- =====================================================
+             Urgency
+             ===================================================== -->
+        <div class="form-section">
+          <h3>Urgency</h3>
+          <p class="sub">
+            Reserve <b>High</b> for issues with active business impact (e.g., new-item launch delayed).
+          </p>
+          <div class="opt-group">
+            <kds-radio name="urgency" value="LOW" required>Low</kds-radio>
+            <kds-radio name="urgency" value="MEDIUM" checked>Medium</kds-radio>
+            <kds-radio name="urgency" value="HIGH">High</kds-radio>
+          </div>
+        </div>
+
+        <!-- =====================================================
+             Contact info (editable, pre-filled from profile)
+             ===================================================== -->
+        <div class="form-section">
+          <h3>Contact information</h3>
+          <p class="sub">We pre-filled this from your profile — edit if needed.</p>
+          <div class="field-grid-2">
+            <div class="field">
+              <label for="contact-name">Name <span class="req">*</span></label>
+              <kds-input id="contact-name" name="contact-name" type="text" required></kds-input>
+            </div>
+            <div class="field">
+              <label for="contact-email">Email <span class="req">*</span></label>
+              <kds-input id="contact-email" name="contact-email" type="email" required></kds-input>
+            </div>
+          </div>
+          <div class="field-grid-2">
+            <div class="field">
+              <label for="contact-phone">Phone</label>
+              <kds-input id="contact-phone" name="contact-phone" type="tel"></kds-input>
+            </div>
+            <div class="field">
+              <label for="contact-company">Company</label>
+              <kds-input id="contact-company" name="contact-company" type="text" readonly></kds-input>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+             Actions
+             ===================================================== -->
+        <div style="display:flex; justify-content:flex-end; gap:10px; align-items:center;">
+          <kds-button kind="tertiary" onclick="history.back(); return false;">Cancel</kds-button>
+          <kds-button kind="primary" type="submit">Submit case</kds-button>
+        </div>
+      </form>
+
+      <div class="proto-note">
+        <b>Routing preview:</b> Based on your selections, this case will be auto-categorized
+        and routed to the most likely owning team. You can review and override before submission
+        in the real product; this prototype routes automatically on submit.
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONFIRMATION STATE — hidden until form submits
+         ============================================================ -->
+    <section class="card" id="confirm-state" style="display:none;">
+      <div class="confirm-card">
+        <div class="check">✓</div>
+        <h2>Case created</h2>
+        <p style="margin:0; color:var(--gray-600);">Your support case has been submitted and routed.</p>
+        <div class="case-id" id="confirm-case-id">CASE-2026-05-0001</div>
+
+        <div class="details">
+          <div class="row">Assigned team: <b id="confirm-team">Banner IT</b></div>
+          <div class="row">Routing reason: <span id="confirm-reason" style="color:var(--gray-600);">—</span></div>
+          <div class="row">Response SLA: <b id="confirm-sla">48 hours</b></div>
+          <div class="row">Notifications: <b>Email + in-app</b></div>
+        </div>
+
+        <p style="margin-top:18px; color:var(--gray-500); font-size:13px;">
+          We'll email you when there's an update. You can also track this case from your dashboard.
+        </p>
+
+        <div class="footer-actions">
+          <kds-button kind="secondary" id="confirm-back-to-item" onclick="location.href='dashboard.html'">← Back to dashboard</kds-button>
+          <kds-button kind="primary" onclick="location.href='dashboard.html'">View open cases</kds-button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="mock-data.js"></script>
+  <script>
+    const BADGE_BY_STATUS = {
+      COMPLETED:   { cls: "badge-success",  label: "✓ Completed" },
+      IN_PROGRESS: { cls: "badge-progress", label: "⏳ In progress" },
+      FAILED:      { cls: "badge-failed",   label: "❌ Failed" },
+      PARTIAL:     { cls: "badge-warning",  label: "⚠ Partial" }
+    };
+
+    // ============================================================
+    // Pre-fill: contact info from profile; context box from ?gtin
+    // ============================================================
+    const profile = MOCK.SUPPLIER_PROFILE;
+    document.getElementById("contact-name").value = profile.name;
+    document.getElementById("contact-email").value = profile.email;
+    document.getElementById("contact-phone").value = profile.phone;
+    document.getElementById("contact-company").value = profile.company;
+
+    const params = new URLSearchParams(location.search);
+    const gtin = params.get("gtin");
+    const contextItem = gtin ? MOCK.ITEMS_BY_GTIN[gtin] : null;
+
+    if (contextItem) {
+      document.getElementById("context-box").style.display = "";
+      document.getElementById("ctx-gtin").textContent = contextItem.gtin;
+      document.getElementById("ctx-supplier").textContent = contextItem.supplierName;
+      document.getElementById("ctx-stage").textContent = humanStage(contextItem.currentStage);
+      const badge = BADGE_BY_STATUS[contextItem.overallStatus] || BADGE_BY_STATUS.IN_PROGRESS;
+      const statusEl = document.getElementById("ctx-status-badge");
+      statusEl.className = `badge ${badge.cls}`;
+      statusEl.textContent = badge.label;
+
+      if (contextItem.errors && contextItem.errors.length > 0) {
+        document.getElementById("ctx-error-row").style.display = "";
+        document.getElementById("ctx-error").textContent = contextItem.errors[0].plainLanguageMessage;
+      }
+
+      // Auto-check affected banners based on which ones are failing
+      preselectAffectedBanners(contextItem);
+
+      // "Back to item" in confirmation footer should return to detail page
+      const backBtn = document.getElementById("confirm-back-to-item");
+      backBtn.onclick = () => { location.href = `supplier.html?scenario=${contextItem.scenarioKey}`; };
+      backBtn.textContent = "← Back to item status";
+    }
+
+    function humanStage(name) {
+      const stage = MOCK.STAGES.find(s => s.name === name);
+      return stage ? stage.displayName : name;
+    }
+
+    function preselectAffectedBanners(item) {
+      const failingBanners = (item.banners || [])
+        .filter(b => b.status === "STALE" || b.status === "FAILED")
+        .map(b => b.code);
+      document.querySelectorAll('kds-checkbox[name="banners"]').forEach(cb => {
+        if (failingBanners.includes(cb.getAttribute("value"))) {
+          cb.checked = true;
+        }
+      });
+    }
+
+    // Selected-state visuals are handled natively by kds-checkbox / kds-radio.
+
+    // ============================================================
+    // Submit — mock routing logic + show confirmation
+    // ============================================================
+    function submitCase(e) {
+      e.preventDefault();
+      const banners = Array.from(document.querySelectorAll('kds-checkbox[name="banners"]'))
+        .filter(cb => cb.checked)
+        .map(cb => cb.getAttribute("value"));
+      if (banners.length === 0) {
+        alert("Please select at least one affected banner.");
+        return false;
+      }
+
+      const description = document.getElementById("description").value;
+      const urgencyEl = Array.from(document.querySelectorAll('kds-radio[name="urgency"]')).find(r => r.checked);
+      const urgency = urgencyEl ? urgencyEl.getAttribute("value") : "MEDIUM";
+
+      // Toy routing: if Harris Teeter is affected → Banner IT; if it looks
+      // image-related → Banner IT; otherwise → Data Ops. Just enough to
+      // make the confirmation feel real.
+      let team = "Data Ops";
+      let reason = "Default routing for non-banner-specific issues.";
+      let sla = urgency === "HIGH" ? "24 hours" : urgency === "LOW" ? "5 business days" : "48 hours";
+
+      const desc = description.toLowerCase();
+      if (banners.includes("HARRIS_TEETER")) {
+        team = "Banner IT";
+        reason = "Harris Teeter is involved — Banner IT owns cache invalidation.";
+      } else if (desc.includes("image") || desc.includes("photo")) {
+        team = "Banner IT";
+        reason = "Description mentions imagery — Banner IT handles PDP media.";
+      } else if (contextItem && contextItem.overallStatus === "FAILED" && contextItem.currentStage === "KIA_VALIDATION") {
+        team = "Data Ops";
+        reason = "Item failed KIA validation — Data Ops owns ingestion errors.";
+      }
+
+      // Generate a plausible-looking case ID
+      const caseId = "CASE-2026-05-" + String(Math.floor(Math.random() * 9000) + 1000);
+
+      document.getElementById("confirm-case-id").textContent = caseId;
+      document.getElementById("confirm-team").textContent = team;
+      document.getElementById("confirm-reason").textContent = reason;
+      document.getElementById("confirm-sla").textContent = sla;
+
+      // Swap form for confirmation
+      document.getElementById("form-state").style.display = "none";
+      document.getElementById("confirm-state").style.display = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return false;
+    }
+  </script>
+</body>
+</html>

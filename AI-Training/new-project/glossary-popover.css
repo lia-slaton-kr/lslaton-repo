@@ -1,0 +1,81 @@
+/* ============================================================
+   Inline glossary term + anchored popover card.
+   Shared across every layer. Assumes KDS tokens (light.css)
+   are loaded so rgb(var(--…)) resolves.
+   ============================================================ */
+
+/* Inline term trigger — reads as a helpful link, not a button */
+.gterm {
+  color: rgb(var(--accent-mostProminent-rgb));
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(var(--accent-moreProminent-rgb));
+  background: none; border: 0; padding: 0; font: inherit;
+}
+.gterm:hover { text-decoration-style: solid; }
+.gterm:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: 0 0 0 3px rgb(var(--accent-mostSubtle-rgb));
+}
+
+/* Popover card */
+.gpop {
+  position: fixed;
+  z-index: 90;
+  width: 300px; max-width: calc(100vw - 24px);
+  background: #fff;
+  border: 1.5px solid rgb(var(--neutral-lessSubtle-rgb));
+  border-radius: 14px;
+  box-shadow: 0 14px 40px -14px rgba(31, 26, 20, 0.32);
+  padding: 16px 16px 14px;
+  font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  opacity: 0; visibility: hidden; transform: translateY(4px);
+  transition: opacity .14s ease, transform .14s ease, visibility .14s;
+}
+.gpop.open { opacity: 1; visibility: visible; transform: none; }
+
+.gpop-term {
+  font-size: 15px; font-weight: 900; letter-spacing: -0.01em;
+  color: rgb(var(--system-text-rgb)); margin: 0 0 6px;
+}
+.gpop-def {
+  font-size: 13.5px; line-height: 1.5;
+  color: rgb(var(--neutral-moreProminent-rgb)); margin: 0;
+}
+
+/* analogy uses the same pull-quote treatment as layer content */
+.gpop-analogy {
+  margin: 10px 0 0; padding: 10px 12px;
+  background: rgb(var(--accent-mostSubtle-rgb));
+  border: 1.5px solid rgb(var(--accent-moreProminent-rgb));
+  border-radius: 10px;
+  font-size: 13.5px; font-weight: 800; line-height: 1.4;
+  color: rgb(var(--accent-mostProminent-rgb));
+}
+
+.gpop-link {
+  display: inline-block; margin-top: 12px;
+  font-size: 13px; font-weight: 800;
+  color: rgb(var(--accent-mostProminent-rgb));
+  text-decoration: none;
+}
+.gpop-link:hover { text-decoration: underline; }
+
+/* caret */
+.gpop-caret {
+  position: absolute; width: 12px; height: 12px;
+  background: #fff;
+  border: 1.5px solid rgb(var(--neutral-lessSubtle-rgb));
+  transform: rotate(45deg);
+  left: 50%; margin-left: -6px;
+}
+.gpop.place-above .gpop-caret { bottom: -7px; border-top: 0; border-left: 0; }
+.gpop.place-below .gpop-caret { top: -7px; border-bottom: 0; border-right: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gpop { transition: none; }
+}

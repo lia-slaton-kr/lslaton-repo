@@ -546,6 +546,299 @@ a:hover { text-decoration: underline; }
 .landing-card p { margin: 0; color: var(--gray-600); font-size: 13px; }
 .landing-card .uc { font-size: 12px; color: var(--gray-500); margin-top: 10px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
 
+/* ============================================================
+   Search bar (dashboard hero)
+   ============================================================ */
+.search-hero {
+  background: linear-gradient(135deg, var(--kroger-blue), var(--kroger-blue-dark));
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+.search-hero h1 { margin: 0 0 6px; font-size: 22px; }
+.search-hero p { margin: 0 0 18px; opacity: 0.9; font-size: 13px; }
+.search-box {
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 6px;
+  box-shadow: var(--shadow-md);
+}
+.search-box input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--gray-900);
+  outline: none;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+.search-box input::placeholder { color: var(--gray-400); font-family: inherit; }
+.search-box .btn { font-size: 14px; padding: 10px 18px; }
+.search-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+.search-hint code {
+  background: rgba(255,255,255,0.15);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+/* ============================================================
+   Filter chips (used on dashboard for status filter)
+   ============================================================ */
+.filter-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.filter-row .label {
+  font-size: 12px;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.filter-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--gray-300);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-700);
+  cursor: pointer;
+}
+.filter-chip:hover { background: var(--gray-50); }
+.filter-chip.active {
+  background: var(--kroger-blue);
+  color: #fff;
+  border-color: var(--kroger-blue);
+}
+.filter-chip .count {
+  margin-left: 6px;
+  padding: 1px 6px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 8px;
+  font-size: 10px;
+}
+.filter-chip.active .count { background: rgba(255,255,255,0.2); }
+
+/* ============================================================
+   Items table (dashboard)
+   ============================================================ */
+.table-wrap { overflow-x: auto; }
+table.items {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+table.items th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+  font-weight: 700;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--gray-50);
+}
+table.items td {
+  padding: 12px;
+  border-bottom: 1px solid var(--gray-200);
+  vertical-align: middle;
+}
+table.items tr:hover td { background: var(--gray-50); }
+table.items tr:last-child td { border-bottom: 0; }
+table.items .gtin {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+table.items .stalled-flag {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--status-warning);
+  font-weight: 700;
+}
+table.items .action-link {
+  font-weight: 600;
+  color: var(--kroger-blue);
+}
+table.items tr.clickable { cursor: pointer; }
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gray-500);
+}
+.empty-state .glyph { font-size: 36px; margin-bottom: 8px; }
+
+/* ============================================================
+   Forms (case creation)
+   ============================================================ */
+.form-section {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.form-section:last-child { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+.form-section h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--gray-900);
+}
+.form-section .sub {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-bottom: 14px;
+}
+.field {
+  margin-bottom: 14px;
+}
+.field:last-child { margin-bottom: 0; }
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+.field label .req { color: var(--status-failed); margin-left: 2px; }
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--gray-900);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.1s, box-shadow 0.1s;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--kroger-blue);
+  box-shadow: 0 0 0 3px var(--kroger-blue-light);
+}
+.field textarea { min-height: 96px; resize: vertical; }
+.field-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 640px) {
+  .field-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Checkbox / radio groups (banner multi-select, urgency, resubmit) */
+.opt-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.opt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  background: #fff;
+  user-select: none;
+}
+.opt-chip:hover { background: var(--gray-50); }
+.opt-chip input { margin: 0; cursor: pointer; }
+.opt-chip.selected {
+  border-color: var(--kroger-blue);
+  background: var(--kroger-blue-light);
+  color: var(--kroger-blue-dark);
+  font-weight: 600;
+}
+
+/* Pre-filled context box at top of case form */
+.context-box {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+.context-box .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.context-box .row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.context-box .row:last-child { margin-bottom: 0; }
+.context-box b { color: var(--gray-900); }
+
+/* Confirmation card (post-submit) */
+.confirm-card {
+  text-align: center;
+  padding: 48px 32px;
+}
+.confirm-card .check {
+  width: 56px; height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--status-success);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 700;
+}
+.confirm-card h2 { margin: 0 0 6px; font-size: 22px; color: var(--gray-900); }
+.confirm-card .case-id {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 18px;
+  color: var(--kroger-blue);
+  font-weight: 700;
+  margin-top: 4px;
+}
+.confirm-card .details {
+  display: inline-block;
+  text-align: left;
+  margin: 18px auto 0;
+  background: var(--gray-50);
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.confirm-card .details .row { margin-bottom: 6px; }
+.confirm-card .details .row:last-child { margin-bottom: 0; }
+.confirm-card .details b { color: var(--gray-900); }
+.confirm-card .footer-actions { margin-top: 24px; display: flex; justify-content: center; gap: 10px; }
+
 /* Prototype note */
 .proto-note {
   font-size: 12px;
@@ -557,3 +850,15 @@ a:hover { text-decoration: underline; }
   margin-top: 16px;
 }
 .proto-note b { color: var(--gray-700); }
+
+/* ============================================================
+   KDS (mx-web-components) host layout
+   The rules above target native <input>/<textarea>/<button>, which
+   can't reach into a web component's shadow DOM. These make the KDS
+   custom-element hosts lay out like the primitives they replaced.
+   ============================================================ */
+.search-box kds-input { flex: 1; min-width: 0; }
+.field kds-input,
+.field kds-textarea { display: block; width: 100%; }
+.opt-group kds-checkbox,
+.opt-group kds-radio { display: inline-flex; align-items: center; }

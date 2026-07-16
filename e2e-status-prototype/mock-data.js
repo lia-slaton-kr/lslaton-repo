@@ -123,6 +123,37 @@ window.MOCK = (function () {
     BANNER: ITEM_BANNER
   };
 
+  // Lookup-by-GTIN — used by case-creation form to fetch context
+  const ITEMS_BY_GTIN = {
+    "00012345678905": { scenarioKey: "HAPPY",  ...ITEM_HAPPY },
+    "00087692000044": { scenarioKey: "ERROR",  ...ITEM_ERROR },
+    "00087692000825": { scenarioKey: "BANNER", ...ITEM_BANNER }
+  };
+
+  // ---------- Recent items list (dashboard table) ----------
+  // Summary rows for the supplier dashboard. Three rows resolve
+  // to full scenarios above; the rest are listing-only.
+  const RECENT_ITEMS = [
+    { gtin: "00012345678905", supplierName: "Kraft Heinz",       currentStage: "PIM Enrichment",        overallStatus: "IN_PROGRESS", lastUpdated: "2026-05-15T14:32:00Z", stalled: false, scenarioKey: "HAPPY" },
+    { gtin: "00087692000044", supplierName: "Boston Beer Co.",   currentStage: "KIA Validation",        overallStatus: "FAILED",      lastUpdated: "2026-05-15T10:16:00Z", stalled: false, scenarioKey: "ERROR" },
+    { gtin: "00087692000825", supplierName: "Tillamook",         currentStage: "Live on Banners",       overallStatus: "PARTIAL",     lastUpdated: "2026-05-15T08:00:00Z", stalled: false, scenarioKey: "BANNER" },
+    { gtin: "00074682019345", supplierName: "Mondelez",          currentStage: "Live on Banners",       overallStatus: "COMPLETED",   lastUpdated: "2026-05-14T16:42:00Z", stalled: false },
+    { gtin: "00016000189812", supplierName: "General Mills",     currentStage: "PIM Enrichment",        overallStatus: "IN_PROGRESS", lastUpdated: "2026-05-12T03:11:00Z", stalled: true  }, // >48h
+    { gtin: "00012000182501", supplierName: "PepsiCo",           currentStage: "Live on Banners",       overallStatus: "COMPLETED",   lastUpdated: "2026-05-14T11:25:00Z", stalled: false },
+    { gtin: "00049000031027", supplierName: "Coca-Cola",         currentStage: "Web Publishing",        overallStatus: "IN_PROGRESS", lastUpdated: "2026-05-15T13:00:00Z", stalled: false },
+    { gtin: "00034000403295", supplierName: "Hershey",           currentStage: "KIA Validation",        overallStatus: "FAILED",      lastUpdated: "2026-05-15T07:48:00Z", stalled: false },
+    { gtin: "00028400090050", supplierName: "Frito-Lay",         currentStage: "Live on Banners",       overallStatus: "COMPLETED",   lastUpdated: "2026-05-13T22:14:00Z", stalled: false },
+    { gtin: "00041500004105", supplierName: "ConAgra",           currentStage: "Master Data Enrichment",overallStatus: "IN_PROGRESS", lastUpdated: "2026-05-15T11:50:00Z", stalled: false }
+  ];
+
+  // ---------- Profile (used as default contact info on case form) ----------
+  const SUPPLIER_PROFILE = {
+    name: "John Smith",
+    email: "john.smith@krafheinz.com",
+    phone: "+1 (513) 555-0142",
+    company: "Kraft Heinz"
+  };
+
   // ---------- Error taxonomy entries (full guidance) ----------
   const ERRORS = {
     KIA_VAL_IMG_ORIENTATION_INVALID: {
@@ -257,5 +288,5 @@ window.MOCK = (function () {
     }
   ];
 
-  return { STAGES, ITEMS, ERRORS, DIAGNOSTIC_LOGS, BANNER_HEALTH };
+  return { STAGES, ITEMS, ITEMS_BY_GTIN, RECENT_ITEMS, SUPPLIER_PROFILE, ERRORS, DIAGNOSTIC_LOGS, BANNER_HEALTH };
 })();

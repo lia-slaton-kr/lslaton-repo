@@ -1,0 +1,80 @@
+/* ============================================================
+   Glossary page — same warm-on-KDS system as the layers.
+   ============================================================ */
+:root {
+  --ink: rgb(var(--system-text-rgb));
+  --ink-soft: rgb(var(--neutral-moreProminent-rgb));
+  --ink-faint: rgb(var(--neutral-lessProminent-rgb));
+  --accent: rgb(var(--accent-moreProminent-rgb));
+  --accent-strong: rgb(var(--accent-mostProminent-rgb));
+  --accent-tint: rgb(var(--accent-mostSubtle-rgb));
+  --line: rgb(var(--neutral-lessSubtle-rgb));
+  --surface: #ffffff;
+  --page: #faf6f0;
+  --page-tint: #f3ede3;
+  --radius: 16px;
+  --max: 760px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(1100px 560px at 50% -10%, var(--page-tint), transparent 60%), var(--page);
+  -webkit-font-smoothing: antialiased; line-height: 1.55;
+}
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 22px; }
+
+.site-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 22px 0 6px; }
+.wordmark { font-weight: 900; font-size: 18px; letter-spacing: -0.015em; margin: 0; }
+.home-link { font-size: 13px; font-weight: 800; color: var(--accent-strong); text-decoration: none; }
+.home-link:hover { text-decoration: underline; }
+
+.gl-head { margin: 22px 0 16px; }
+.gl-kicker { font-size: 13px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+.gl-title { margin: 0 0 6px; font-size: 32px; font-weight: 900; letter-spacing: -0.025em; }
+.gl-sub { margin: 0; font-size: 16px; color: var(--ink-soft); max-width: 54ch; }
+
+/* search */
+.gl-search {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 999px;
+  padding: 4px 6px 4px 16px; margin: 8px 0 22px; box-shadow: 0 1px 2px rgba(31,26,20,.05);
+}
+.gl-search-ic { font-size: 15px; }
+#gl-search {
+  flex: 1; border: 0; background: transparent; outline: none;
+  font: inherit; font-size: 16px; color: var(--ink); padding: 10px 8px;
+}
+#gl-search::placeholder { color: var(--ink-faint); }
+
+/* list */
+.gl-list { display: flex; flex-direction: column; gap: 10px; }
+.gl-group-label {
+  font-size: 12px; font-weight: 900; letter-spacing: 0.08em; color: var(--accent-strong);
+  margin: 18px 0 2px; text-transform: uppercase;
+}
+.gl-entry {
+  scroll-margin-top: 80px;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.gl-entry.flash { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-tint); }
+.gl-term { margin: 0 0 6px; font-size: 18px; font-weight: 900; letter-spacing: -0.01em; }
+.gl-def { margin: 0; font-size: 15px; color: var(--ink); line-height: 1.55; }
+.gl-analogy {
+  margin: 12px 0 0; padding: 10px 14px;
+  background: var(--accent-tint); border: 1.5px solid var(--accent); border-radius: 10px;
+  font-size: 14px; font-weight: 800; color: var(--accent-strong); line-height: 1.4;
+}
+
+.gl-empty { text-align: center; color: var(--ink-faint); font-weight: 700; padding: 28px 0; }
+
+.site-foot { margin: 40px 0; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-faint); }
+
+@media (max-width: 640px) {
+  .gl-title { font-size: 26px; }
+}

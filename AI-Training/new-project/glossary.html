@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary — So About This AI Stuff</title>
+  <meta name="description" content="A plain-English glossary of AI terms for designers — searchable and browsable." />
+
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-components.css" />
+
+  <link rel="stylesheet" href="glossary.css" />
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="site-head">
+      <h1 class="wordmark">So About This AI Stuff</h1>
+      <a class="home-link" href="index.html">← Home</a>
+    </header>
+
+    <div class="gl-head">
+      <p class="gl-kicker">Glossary</p>
+      <h1 class="gl-title">Plain-English AI terms</h1>
+      <p class="gl-sub">Every term from the layers, defined without the jargon. Search it, or browse A–Z.</p>
+    </div>
+
+    <div class="gl-search">
+      <span class="gl-search-ic" aria-hidden="true">🔍</span>
+      <input id="gl-search" type="search" autocomplete="off" placeholder="Search terms (e.g. tokens, API, model)…" aria-label="Search glossary terms" />
+    </div>
+
+    <div class="gl-list" id="gl-list" aria-live="polite"></div>
+    <p class="gl-empty" id="gl-empty" hidden>No terms match that search.</p>
+
+    <footer class="site-foot">
+      So About This AI Stuff · the glossary grows as new layers land.
+    </footer>
+  </div>
+
+  <script src="glossary-data.js"></script>
+  <script src="glossary.js"></script>
+</body>
+</html>

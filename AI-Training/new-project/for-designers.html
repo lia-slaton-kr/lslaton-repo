@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Designers — So About This AI Stuff</title>
+  <meta name="description" content="How AI applies to your actual design work — inputs, artifacts, trust, and the tools — for designers." />
+
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-reset.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/light.css" />
+  <link rel="stylesheet" href="../../node_modules/mx-web-components/dist/kds-components.css" />
+  <script type="module" src="../../node_modules/mx-web-components/dist/mx-web-components/mx-web-components.esm.js"></script>
+
+  <link rel="stylesheet" href="for-designers.css" />
+  <link rel="stylesheet" href="glossary-popover.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <header class="site-head">
+      <span class="wordmark">so about this AI stuff<span class="ellipsis">…</span></span>
+      <a class="home-link" href="index.html">← Home</a>
+    </header>
+
+    <div class="layer-head">
+      <p class="layer-kicker">Layer 4 of 4</p>
+      <h1 class="layer-title">For Designers</h1>
+      <p class="layer-sub">How does this apply to my work?</p>
+    </div>
+
+    <!-- ===== MAIN STEPPER (1 · 2 · 3) ===== -->
+    <nav class="stepper" id="stepper-1" aria-label="Sections">
+      <button type="button" class="step-tab" data-goto="0"><span class="n">1</span><span class="label">Giving AI what it needs</span></button>
+      <button type="button" class="step-tab" data-goto="1"><span class="n">2</span><span class="label">Artifact by artifact</span></button>
+      <button type="button" class="step-tab" data-goto="2"><span class="n">3</span><span class="label">Trust &amp; verification</span></button>
+    </nav>
+
+    <!-- ============================================================
+         SECTION 1 — Giving AI what it needs
+         ============================================================ -->
+    <section class="panel" data-step="0" id="giving">
+      <p class="section-eyebrow">Section 1</p>
+      <h2 class="section-h" tabindex="-1">Giving AI what it needs</h2>
+
+      <!-- Concept 1 -->
+      <div class="concept">
+        <h3 class="concept-h">The honest truth about AI and design work</h3>
+        <div class="prose">
+          <p>AI won't automatically make you a better designer. But used well, it can take the parts of design work that are slow, repetitive, or draining — synthesizing 40 interview transcripts, drafting a journey map from scratch, writing the first version of a research readout — and make them significantly faster.</p>
+          <p>The catch is that "used well" requires knowing what to give it, how to ask, and what to verify before anything goes to a stakeholder. That's what this layer is about.</p>
+        </div>
+        <div class="analogy">
+          <span class="glyph" aria-hidden="true">🧭</span>
+          <p>AI is a fast, tireless collaborator who will confidently do whatever you ask — whether or not it's right. Your job isn't to prompt it. Your job is to direct it, review it, and own the output.</p>
+        </div>
+      </div>
+
+      <!-- Concept 2 -->
+      <div class="concept">
+        <h3 class="concept-h">Why inputs matter more than you think</h3>
+        <div class="prose">
+          <p>The quality of what AI produces is almost entirely determined by what you give it. A vague brief gets a vague output. A well-constructed input — real data, clear constraints, a specific ask — gets something you can actually use.</p>
+          <p>This is what designers mean when they talk about <span class="gterm" data-term="prompt">prompting</span>. It's not a magic trick. It's briefing — the same way you'd brief a junior designer or a researcher — except the AI will never push back, never ask a clarifying question, and never tell you it doesn't have enough to go on. It'll just produce something.</p>
+          <p>So the responsibility for a good brief is entirely yours.</p>
+        </div>
+        <div class="analogy">
+          <span class="glyph" aria-hidden="true">📝</span>
+          <p>A detailed prompt isn't prescriptive for its own sake. It's a brief. And you already know how to write those.</p>
+        </div>
+      </div>
+
+      <!-- Concept 3 -->
+      <div class="concept">
+        <h3 class="concept-h">What works as input</h3>
+        <div class="io-cols">
+          <div class="io-col strong">
+            <p class="io-cap">Strong inputs</p>
+            <div class="io-item"><p class="io-term">Interview transcripts</p><p class="io-desc">Paste them in full or summarized by question. More raw data = more grounded output.</p></div>
+            <div class="io-item"><p class="io-term">Video transcripts</p><p class="io-desc">Most AI tools can't watch video directly, but exported transcripts work well as text input.</p></div>
+            <div class="io-item"><p class="io-term">Support ticket logs</p><p class="io-desc">Exported CSVs or copied text. The more tickets, the better the pattern recognition — but always ask for evidence (more on this below).</p></div>
+            <div class="io-item"><p class="io-term">PDFs and PNGs from Mural</p><p class="io-desc">Claude and some other tools can read PDFs. For image exports from Mural, describe what's on the board or paste the text content — AI reads images inconsistently.</p></div>
+            <div class="io-item"><p class="io-term">Existing templates</p><p class="io-desc">If your team has a research plan or readout template, paste it in and ask AI to fill it out based on your data. Structured input produces structured output.</p></div>
+            <div class="io-item"><p class="io-term">Examples of good work</p><p class="io-desc">Paste a strong persona or journey map you've made before and say "use this as a format and quality reference."</p></div>
+          </div>
+          <div class="io-col weak">
+            <p class="io-cap">Weak inputs</p>
+            <div class="io-item"><p class="io-term">"Make me a persona"</p><p class="io-desc">No context, no data. AI will invent one that sounds plausible and means nothing.</p></div>
+            <div class="io-item"><p class="io-term">"Analyze our users"</p><p class="io-desc">Who are your users? What data do you have? AI can't answer questions you haven't given it material for.</p></div>
+            <div class="io-item"><p class="io-term">"Write a journey map for checkout"</p><p class="io-desc">For what product? What user? What do you already know? Without context, you'll get a generic output that fits every product and none of them.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 4 -->
+      <div class="concept">
+        <h3 class="concept-h">The one rule that changes everything</h3>
+        <div class="prose">
+          <p>Before you share any AI output with a stakeholder, teammate, or engineer — ask yourself:</p>
+        </div>
+        <div class="callout"><p>Can I point to where this came from?</p></div>
+        <div class="prose">
+          <p>If the answer is yes — it came from the transcript, the tickets, the template — you're in good shape.</p>
+          <p>If the answer is no — it came from the AI's general knowledge, or you're not sure — it needs verification before it goes anywhere.</p>
+          <p>This isn't about distrusting AI. It's about owning your work. When someone asks "where did you get that?" — and they will — you need an answer that isn't "the AI said so."</p>
+        </div>
+        <div class="analogy">
+          <span class="glyph" aria-hidden="true">📸</span>
+          <p>AI output without evidence is a rough sketch from memory. AI output with evidence is a sketch with a reference photo. Both might look the same — but only one holds up when someone looks closely.</p>
+        </div>
+      </div>
+
+      <!-- Concept 5 — prompt anatomy (interactive, built by JS) -->
+      <div class="concept">
+        <h3 class="concept-h">What a good prompt is actually doing</h3>
+        <div class="prose">
+          <p>The example prompts in this layer are long. Seven instructions, multiple constraints, a template pasted in. That can feel like a lot.</p>
+          <p>Here's what each part is doing — and why leaving any of it out changes the output.</p>
+        </div>
+        <div class="anatomy" id="anatomy"></div>
+      </div>
+
+      <div class="panel-nav">
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next1">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2 — Artifact by artifact
+         ============================================================ -->
+    <section class="panel" data-step="1" id="artifacts" hidden>
+      <p class="section-eyebrow">Section 2</p>
+      <h2 class="section-h" tabindex="-1">Artifact by artifact</h2>
+      <p class="section-intro">Three artifacts, three scenario cards. Each one shows you what to provide, an example prompt you can copy and adapt, and the specific watch-out for that artifact type.</p>
+
+      <!-- Card 1 — Personas -->
+      <div class="scenario">
+        <p class="scenario-sub">Scenario card</p>
+        <h3 class="scenario-h">Personas</h3>
+
+        <div class="sc-block">
+          <p class="sc-h">What to provide</p>
+          <p class="sc-body">Personas built from nothing are fiction. Personas built from real data are tools. The difference is what you give the AI to work from.</p>
+          <p class="sc-h" style="margin-top:14px;">Strong inputs for personas</p>
+          <ul class="inputs-list">
+            <li><span class="il-term">Interview transcripts</span><div class="il-desc">The more the better. 5+ interviews gives AI enough to identify real patterns across participants.</div></li>
+            <li><span class="il-term">Screener responses</span><div class="il-desc">Who was recruited, what criteria, what they told you before the interview.</div></li>
+            <li><span class="il-term">Existing segments</span><div class="il-desc">If your team already has customer segments or user types defined, include them — AI should build toward known reality, not invent its own.</div></li>
+            <li><span class="il-term">Your persona template</span><div class="il-desc">Paste it in so the output matches your team's format exactly.</div></li>
+          </ul>
+        </div>
+
+        <div class="sc-block">
+          <p class="sc-h">Example prompt — copy and adapt</p>
+          <div class="codeblock">
+            <button type="button" class="copy-btn">Copy</button>
+            <pre class="code">I'm going to paste in transcripts from [X] user interviews. Based only on what appears in these transcripts, I need you to identify 2-3 distinct user types and draft a persona for each.
+
+For each persona:
+- Use our template format (pasted below)
+- Base every attribute on something a real participant said or did — do not invent details
+- If something in the template can't be filled from the transcripts, mark it [NEEDS DATA] rather than making something up
+- For each key insight, quote the transcript line that supports it
+
+Here is our persona template:
+[paste template]
+
+Here are the transcripts:
+[paste transcripts]</pre>
+          </div>
+        </div>
+
+        <div class="watchout">
+          <p class="wo-h">Watch out for — the invented detail problem</p>
+          <p>AI will fill in persona details that sound real but aren't grounded in your data. A persona that says "Maya checks her phone 47 times a day and prefers asynchronous communication" didn't come from your interviews — it came from general knowledge about user behavior that matched the pattern.</p>
+          <p>The [NEEDS DATA] instruction is doing important work. It forces AI to flag gaps rather than fill them with plausible fiction. Review every attribute and ask: did someone actually say this?</p>
+        </div>
+      </div>
+
+      <!-- Card 2 — User Journey Maps -->
+      <div class="scenario">
+        <p class="scenario-sub">Scenario card</p>
+        <h3 class="scenario-h">User Journey Maps</h3>
+
+        <div class="sc-block">
+          <p class="sc-h">What to provide</p>
+          <p class="sc-body">Journey maps are only as good as the reality they reflect. AI can help you structure, synthesize, and identify gaps — but it needs your data to do it honestly.</p>
+          <p class="sc-h" style="margin-top:14px;">Strong inputs for journey maps</p>
+          <ul class="inputs-list">
+            <li><span class="il-term">Interview transcripts</span><div class="il-desc">Especially moments where participants described a process step by step.</div></li>
+            <li><span class="il-term">Existing journey maps</span><div class="il-desc">Even rough ones. AI is excellent at improving and pressure-testing a draft you've already started.</div></li>
+            <li><span class="il-term">Support ticket logs</span><div class="il-desc">Tickets show where the journey breaks — high-volume ticket categories map directly to pain point moments.</div></li>
+            <li><span class="il-term">Service context</span><div class="il-desc">What are the touchpoints? What channels exist? What systems are involved? AI can't know your product's specifics without being told.</div></li>
+          </ul>
+        </div>
+
+        <div class="sc-block">
+          <p class="sc-h">Example prompt — copy and adapt</p>
+          <div class="codeblock">
+            <button type="button" class="copy-btn">Copy</button>
+            <pre class="code">I need to build a user journey map for [user type] completing [task or process].
+
+I'm going to give you:
+1. Transcripts from interviews where participants described this process
+2. Support ticket themes from this part of the experience
+3. The stages we use in our journey map template
+
+Based only on this material, please:
+- Map the journey across our stages
+- Identify emotions and pain points at each stage, quoting specific transcript moments where possible
+- Flag any stages where you don't have enough data to make a grounded observation — mark these [NEEDS VALIDATION]
+- Identify gaps: are there stages we should have data on but don't?
+
+Our journey map stages are:
+[paste your stages]
+
+Transcripts:
+[paste]
+
+Support ticket themes:
+[paste]</pre>
+          </div>
+        </div>
+
+        <div class="watchout">
+          <p class="wo-h">Watch out for — the gap-filling problem</p>
+          <p>Journey maps have stages. Stages need content. AI will fill every stage whether or not you have data for it — because an empty stage looks wrong to a pattern-matching system trained on complete documents.</p>
+          <p>The [NEEDS VALIDATION] instruction forces honesty about where the map is grounded and where it's speculative. A journey map with some [NEEDS VALIDATION] flags is more useful than a complete one built on invented details — it tells you exactly where your next research effort should go.</p>
+        </div>
+
+        <div class="bonus">
+          <p class="sc-h">Bonus — pressure-testing an existing map</p>
+          <p class="sc-body">This is one of the highest-value uses of AI in design work — not generating from scratch, but reviewing what you already have.</p>
+          <div class="codeblock">
+            <button type="button" class="copy-btn">Copy</button>
+            <pre class="code">Here's a journey map our team built:
+[paste map]
+
+Review it and tell me:
+1. What stages feel underspecified or vague?
+2. Where are we likely missing touchpoints or emotions?
+3. What questions would a skeptical stakeholder ask about this map that we should be able to answer?</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 — Research Readouts -->
+      <div class="scenario">
+        <p class="scenario-sub">Scenario card</p>
+        <h3 class="scenario-h">Research Readouts</h3>
+
+        <div class="sc-block">
+          <p class="sc-h">What to provide</p>
+          <p class="sc-body">The goal of a research readout is to present findings stakeholders can act on. AI can help you synthesize and structure — but every finding needs to trace back to your actual data. If it can't, it shouldn't be in the readout.</p>
+          <p class="sc-h" style="margin-top:14px;">Strong inputs for research readouts</p>
+          <ul class="inputs-list">
+            <li><span class="il-term">Your research data in full</span><div class="il-desc">Transcripts, tickets, survey results — paste the actual source material, not a summary of it. AI synthesizes better from raw data than from your interpretation of raw data.</div></li>
+            <li><span class="il-term">Your readout template</span><div class="il-desc">If your team has one, paste it. AI should fill your format, not invent its own.</div></li>
+            <li><span class="il-term">Your research questions</span><div class="il-desc">What were you trying to learn? AI should organize findings around your actual questions, not whatever patterns it finds most interesting.</div></li>
+            <li><span class="il-term">Any known context</span><div class="il-desc">What does the team already believe? What hypotheses were you testing? This helps AI distinguish between confirming findings and surprising ones.</div></li>
+          </ul>
+        </div>
+
+        <div class="sc-block">
+          <p class="sc-h">Example prompt — copy and adapt</p>
+          <div class="codeblock">
+            <button type="button" class="copy-btn">Copy</button>
+            <pre class="code">I need to write a research readout based on the data I'm going to paste below.
+
+Ground rules:
+- Base every finding only on the data I provide — do not add outside knowledge, invented statistics, or general best practices
+- For every finding, include at least two direct quotes or specific examples from the source data that support it
+- If you identify a pattern but can only find one example supporting it, flag it as [SINGLE INSTANCE — NEEDS VALIDATION] rather than presenting it as a finding
+- Do not include any percentages, averages, or statistics unless they appear explicitly in my data
+- Use our readout template structure
+
+Our research questions were:
+[paste questions]
+
+Our readout template:
+[paste template]
+
+Source data:
+[paste transcripts / tickets / survey results]</pre>
+          </div>
+        </div>
+
+        <div class="watchout">
+          <p class="wo-h">Watch out for — the confident statistic problem</p>
+          <p>AI will generate statistics that sound precise and credible — "2.5 handoffs on average," "support time doubles," "67% of users reported" — even when your data contains nothing of the sort.</p>
+          <p>It learned from millions of documents where that kind of statement appears. It knows what a research finding is supposed to look like. So it produces one.</p>
+          <p>The instruction "do not include any percentages, averages, or statistics unless they appear explicitly in my data" is not optional. It's the difference between a readout you can defend and one that falls apart the moment someone asks for the source.</p>
+        </div>
+
+        <div class="analogy">
+          <span class="glyph" aria-hidden="true">📊</span>
+          <p>A statistic without a source is decoration, not evidence. It makes the readout look more rigorous while actually making it less trustworthy. If you can't point to where a number came from, cut it.</p>
+        </div>
+
+        <div class="sc-block">
+          <p class="sc-h">Before this goes to a stakeholder</p>
+          <ul class="checklist">
+            <li><span class="box" aria-hidden="true"></span><span>Every finding has at least two supporting examples from the actual source data</span></li>
+            <li><span class="box" aria-hidden="true"></span><span>Every statistic has a real source — either your data explicitly or a cited external study</span></li>
+            <li><span class="box" aria-hidden="true"></span><span>[NEEDS VALIDATION] flags have been either validated or removed</span></li>
+            <li><span class="box" aria-hidden="true"></span><span>You can answer "where did you get that?" for every claim on the page</span></li>
+            <li><span class="box" aria-hidden="true"></span><span>Findings have been reviewed by at least one other person familiar with the research</span></li>
+          </ul>
+          <p class="checklist-note">Want to use this as a real checklist? Copy it into Notion or your team's research template.</p>
+        </div>
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back1">← Back</kds-button>
+        <span class="spacer"></span>
+        <kds-button kind="primary" class="js-next1">Next →</kds-button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3 — Trust and verification
+         ============================================================ -->
+    <section class="panel" data-step="2" id="trust" hidden>
+      <p class="section-eyebrow">Section 3</p>
+      <h2 class="section-h" tabindex="-1">Trust and verification</h2>
+
+      <!-- Concept 1 -->
+      <div class="concept">
+        <h3 class="concept-h">Why AI makes things up — and why it sounds so confident</h3>
+        <div class="prose">
+          <p>Understanding why <span class="gterm" data-term="hallucination">hallucination</span> happens makes it less scary and more manageable.</p>
+          <p>AI models learned by reading enormous amounts of text. In that text, certain patterns appeared constantly — research findings have statistics, personas have specific details, journey maps have emotions at every stage. The model learned what these things are supposed to look like.</p>
+          <p>When you ask for a research readout, it produces something that matches the pattern of a research readout — including the statistics, the specific details, the confident language. It's not fabricating intentionally. It doesn't have intentions. It's pattern-matching to what a research readout looks like, and sometimes the pattern includes specifics that weren't in your data.</p>
+        </div>
+        <div class="analogy">
+          <span class="glyph" aria-hidden="true">🎭</span>
+          <p>AI learned to sound like an expert by reading experts. That's different from being one. Sounding confident and being accurate are not the same thing — and AI cannot always tell the difference.</p>
+        </div>
+      </div>
+
+      <!-- Concept 2 — trust tiers -->
+      <div class="concept">
+        <h3 class="concept-h">Three categories of output and how to treat them</h3>
+        <div class="tiers">
+          <div class="tier high">
+            <div class="tier-head"><span class="tier-ic" aria-hidden="true">✅</span><span class="tier-level">High trust</span></div>
+            <p class="tier-cat">Structure and format</p>
+            <p class="tier-row"><b>Examples:</b> Document structure, section headers, template formatting, rewriting something you wrote in a cleaner way</p>
+            <p class="tier-row"><b>Review needed:</b> Light — check that it matches your intent</p>
+          </div>
+          <div class="tier medium">
+            <div class="tier-head"><span class="tier-ic" aria-hidden="true">⚠️</span><span class="tier-level">Medium trust</span></div>
+            <p class="tier-cat">Synthesis from your data</p>
+            <p class="tier-row"><b>Examples:</b> Themes from transcripts you provided, patterns in tickets you pasted, findings from research you gave it</p>
+            <p class="tier-row"><b>Review needed:</b> Moderate — verify findings against source, check for invented specifics, confirm quotes are accurate</p>
+          </div>
+          <div class="tier low">
+            <div class="tier-head"><span class="tier-ic" aria-hidden="true">🛑</span><span class="tier-level">Low trust</span></div>
+            <p class="tier-cat">Knowledge from training</p>
+            <p class="tier-row"><b>Examples:</b> Statistics it generates, industry benchmarks, best practices, anything it "knows" rather than learned from your data</p>
+            <p class="tier-row"><b>Review needed:</b> Heavy — verify any statistic independently, treat general claims as hypotheses not facts, always find the source before sharing</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-nav">
+        <kds-button kind="tertiary" class="js-back1">← Back</kds-button>
+        <span class="spacer"></span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         GOING DEEPER — Tools and how to use them
+         ============================================================ -->
+    <section class="deeper" id="deeper">
+      <hr class="deeper-rule" />
+      <div class="deeper-head">
+        <h2>Want to go further?</h2>
+        <p class="sub">This section is for designers who have been handed a new AI tool and told to "just use it" — and weren't sure where to start.</p>
+        <p class="body">We'll cover which tool to reach for and when, how to get started with Figma AI, and how to use Claude Code without needing an engineering background.</p>
+      </div>
+      <div class="deeper-cta-wrap" id="deeper-cta-wrap">
+        <kds-button kind="primary" id="deeper-open">Keep going →</kds-button>
+      </div>
+
+      <div class="deeper-body" id="deeper-body" hidden>
+        <nav class="stepper" id="stepper-2" aria-label="Going deeper">
+          <button type="button" class="step-tab" data-dgoto="0"><span class="n">🧰</span><span class="label">Tools</span></button>
+          <button type="button" class="step-tab" data-dgoto="1"><span class="n">🎨</span><span class="label">Figma AI</span></button>
+          <button type="button" class="step-tab" data-dgoto="2"><span class="n">⌨️</span><span class="label">Claude Code</span></button>
+        </nav>
+
+        <!-- Going Deeper Concept 1 — Which tool for what -->
+        <section class="panel" data-dstep="0" id="tools">
+          <p class="section-eyebrow">Going deeper</p>
+          <h2 class="section-h" tabindex="-1">Which tool for what</h2>
+          <p class="section-intro">You may have access to several AI tools and no clear guidance on which to use for what. Here's the honest breakdown for your stack.</p>
+
+          <div class="tool-cards">
+            <div class="tool-card">
+              <p class="tc-name">Claude Code</p>
+              <p class="tc-by">Made by Anthropic</p>
+              <p class="tc-best">Building tools, prototypes, and structured projects that need to exist as real files. Works directly in your file system. Highest learning curve of the tools in this guide — also the highest capability ceiling.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You need to build something, not just draft it.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">Claude.ai</p>
+              <p class="tc-by">Made by Anthropic</p>
+              <p class="tc-best">Writing, synthesis, research readouts, artifact drafts. Conversational interface — no file system, no setup. Where to start for most design research tasks.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You have data to synthesize or content to draft and you want to stay in a chat interface.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">Copilot</p>
+              <p class="tc-by">Made by Microsoft (OpenAI engine)</p>
+              <p class="tc-best">Tasks you're already doing in Microsoft 365 — Word, PowerPoint, Teams, Outlook, Excel. Analyzing support tickets in Excel is a strong use case.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You're already in a Microsoft tool and don't want to switch contexts.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">Figma AI</p>
+              <p class="tc-by">Made by Figma</p>
+              <p class="tc-best">Design-specific tasks that would otherwise require leaving Figma — writing copy on a frame, generating variations, getting layout suggestions. Still maturing — results vary.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You're already in Figma and the task is design-specific.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">GenAI Studio</p>
+              <p class="tc-by">Made by Google</p>
+              <p class="tc-best">Multimodal tasks — inputs that combine images, audio, and text. More technical interface than the other tools in this list — designed for developers but usable by designers willing to explore.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You're working with inputs that aren't just text, or you want to experiment with capabilities beyond chat.</p>
+            </div>
+          </div>
+
+          <div class="routing">
+            <p class="rt-h">Task routing — reach for:</p>
+            <table>
+              <tbody>
+                <tr><td class="task">Draft a research readout from transcripts</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Analyze support tickets</td><td class="arrow">→</td><td class="tool">Copilot (in Excel) or Claude.ai</td></tr>
+                <tr><td class="task">Build an interactive prototype or tool</td><td class="arrow">→</td><td class="tool">Claude Code</td></tr>
+                <tr><td class="task">Write UX copy inside a design file</td><td class="arrow">→</td><td class="tool">Figma AI</td></tr>
+                <tr><td class="task">Synthesize interview notes</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Generate a persona draft</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Pressure-test a journey map</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Experiment with image or multimodal input</td><td class="arrow">→</td><td class="tool">GenAI Studio</td></tr>
+                <tr><td class="task">Build something that needs to live as a file or be shared as a link</td><td class="arrow">→</td><td class="tool">Claude Code</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-nav">
+            <span class="spacer"></span>
+            <kds-button kind="primary" class="js-nextD">Next →</kds-button>
+          </div>
+        </section>
+
+        <!-- Going Deeper Concept 2 — Figma AI -->
+        <section class="panel" data-dstep="1" id="figma" hidden>
+          <p class="section-eyebrow">Going deeper</p>
+          <h2 class="section-h" tabindex="-1">Figma AI — what it is and how to think about it</h2>
+          <p class="section-intro">Figma AI is different from the other tools in this guide in one important way: it lives inside Figma. You don't switch tabs, paste content somewhere else, or translate between a design file and a chat interface. The AI assistance happens in context — while you're looking at your actual designs.</p>
+
+          <div class="analogy">
+            <span class="glyph" aria-hidden="true">🎨</span>
+            <p>Figma AI is like having a design assistant sitting next to you while you work — available when you need it, ignorable when you don't. The value is that it's already in the room.</p>
+          </div>
+
+          <div class="cmp2">
+            <div class="cmp-card pos">
+              <p class="cmp-name">What that makes it good for</p>
+              <p class="line">Tasks where leaving Figma creates friction.</p>
+              <p class="line">Writing and rewriting copy directly on a frame — error states, button labels, onboarding text — without copying it out and back in.</p>
+              <p class="line">Generating layer variations without breaking your workflow.</p>
+              <p class="line">Getting a first pass at auto-layout or component suggestions while you're already in the file.</p>
+            </div>
+            <div class="cmp-card">
+              <p class="cmp-name">What it doesn't replace</p>
+              <p class="line">Claude.ai or ChatGPT for research and synthesis work — Figma AI is a design tool, not a research tool.</p>
+              <p class="line">Claude Code for building anything that needs to exist outside of Figma.</p>
+              <p class="line">Your own design judgment — Figma AI generates options, you decide what's right.</p>
+            </div>
+          </div>
+
+          <div class="followup">
+            <span class="tag">The honest state of it</span>
+            <p style="margin:0 0 10px;">Figma AI is still maturing. Some features work well. Some are inconsistent. The interface changes frequently as Figma ships updates.</p>
+            <p style="margin:0 0 10px;">The best way to learn it right now is to open a low-stakes file and try the things that show up — right-click menus, the toolbar, and the AI panel if it's available in your plan.</p>
+            <p style="margin:0;">For current feature documentation, go to Figma's own docs — they'll always be more up to date than anything written here.</p>
+          </div>
+
+          <a class="doc-cta" href="https://figma.com/ai" target="_blank" rel="noopener">Figma AI documentation →</a>
+
+          <div class="panel-nav">
+            <kds-button kind="tertiary" class="js-backD">← Back</kds-button>
+            <span class="spacer"></span>
+            <kds-button kind="primary" class="js-nextD">Next →</kds-button>
+          </div>
+        </section>
+
+        <!-- Going Deeper Concept 3 — Claude Code for designers -->
+        <section class="panel" data-dstep="2" id="claude-code" hidden>
+          <p class="section-eyebrow">Going deeper</p>
+          <h2 class="section-h" tabindex="-1">Claude Code for designers</h2>
+          <p class="section-intro">Claude Code has the steepest learning curve of any tool in this guide. It also has the highest ceiling. This section is for designers who have access to it and want to actually use it — without needing an engineering background.</p>
+
+          <!-- mobile/tablet jump menu -->
+          <div class="cc-jump">
+            <button type="button" class="cc-jump-btn" id="cc-jump-btn" aria-expanded="false">Jump to… <span aria-hidden="true">▾</span></button>
+            <ul class="cc-jump-list" id="cc-jump-list" hidden>
+              <li><a href="#cc-what" data-cc>What it actually is</a></li>
+              <li><a href="#cc-files" data-cc>Where projects live</a></li>
+              <li><a href="#cc-git" data-cc>Git and repos</a></li>
+              <li><a href="#cc-bash" data-cc>Bash command guide</a></li>
+              <li><a href="#cc-approvals" data-cc>The two approval options</a></li>
+              <li><a href="#cc-briefs" data-cc>How to write a brief</a></li>
+              <li><a href="#cc-gofer" data-cc>The gofer problem</a></li>
+            </ul>
+          </div>
+
+          <!-- desktop floating TOC -->
+          <nav class="cc-toc" id="cc-toc" aria-label="Claude Code sections">
+            <p class="toc-cap">On this page</p>
+            <ul>
+              <li><a href="#cc-what" data-cc>What it actually is</a></li>
+              <li><a href="#cc-files" data-cc>Where projects live</a></li>
+              <li><a href="#cc-git" data-cc>Git and repos</a></li>
+              <li><a href="#cc-bash" data-cc>Bash command guide</a></li>
+              <li><a href="#cc-approvals" data-cc>The two approval options</a></li>
+              <li><a href="#cc-briefs" data-cc>How to write a brief</a></li>
+              <li><a href="#cc-gofer" data-cc>The gofer problem</a></li>
+            </ul>
+          </nav>
+
+          <!-- Sub: What it actually is -->
+          <div class="cc-sub" id="cc-what">
+            <h3 class="cc-h">What it actually is</h3>
+            <div class="prose">
+              <p>Claude Code is different from Claude.ai — the chat interface you might use for writing or research. Claude Code is an AI that works directly with files on your computer. It can create files, write code, build things, and make changes across an entire project at once.</p>
+            </div>
+            <div class="cmp2">
+              <div class="cmp-card">
+                <p class="cmp-name">Claude.ai</p>
+                <p class="line">You have a conversation.</p>
+                <p class="line">It writes things for you.</p>
+                <p class="line">You copy what you need.</p>
+              </div>
+              <div class="cmp-card pos">
+                <p class="cmp-name">Claude Code</p>
+                <p class="line">You give it a project.</p>
+                <p class="line">It builds things for you.</p>
+                <p class="line">It works in your actual files.</p>
+              </div>
+            </div>
+            <div class="followup">
+              <span class="tag">For designers</span>
+              For designers, this means you can use Claude Code to build prototypes, create simple tools, or — as this site demonstrates — build an entire interactive website by briefing it the way you'd brief a developer.
+            </div>
+          </div>
+
+          <!-- Sub: Where projects live -->
+          <div class="cc-sub" id="cc-files">
+            <h3 class="cc-h">Where projects live — understanding the file system</h3>
+            <div class="prose">
+              <p>When Claude Code creates a project, it creates a folder on your computer. But where that folder ends up depends on where your <span class="gterm" data-term="terminal">terminal</span> is currently pointed — and that's not always obvious.</p>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">📍</span>
+              <p>The terminal has a location, like a cursor in Finder. Wherever it's pointed is where new things get created.</p>
+            </div>
+            <p class="step-lead">How to know where you are:</p>
+            <div class="prose"><p>Type: <code class="inline">pwd</code> — That stands for "print working directory." It shows your current location — something like <code class="inline">/Users/yourname/Documents</code></p></div>
+            <p class="step-lead">How to avoid losing your projects:</p>
+            <div class="steps">
+              <div class="step-item"><span class="sn">1</span><span class="st">Create a dedicated folder for AI projects somewhere you'll remember — Desktop or Documents works well. Name it something clear: "AI Projects" or "Claude Projects."</span></div>
+              <div class="step-item"><span class="sn">2</span><span class="st">When you start a new Claude Code session, tell it where to put the project: "Create this project in /Users/[yourname]/Documents/AI-Projects/"</span></div>
+              <div class="step-item"><span class="sn">3</span><span class="st">Now you always know where your work lives — no hunting through Finder wondering where things went.</span></div>
+            </div>
+          </div>
+
+          <!-- Sub: Git and repos -->
+          <div class="cc-sub" id="cc-git">
+            <h3 class="cc-h">Git and repos — what they are and why they matter</h3>
+            <div class="prose">
+              <p>When Claude Code asks to initialize a <span class="gterm" data-term="repository">repository</span> or runs git commands, here's what's actually happening.</p>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">🗂️</span>
+              <p>A repository is a project folder with a memory. A regular folder holds your files. A repo holds your files AND a complete history of every change ever made — who changed what, when, and why.</p>
+            </div>
+            <div class="prose">
+              <p>That history is managed by a tool called <span class="gterm" data-term="git">Git</span>. Git is not the same as <span class="gterm" data-term="github">GitHub</span> — a common point of confusion:</p>
+            </div>
+            <div class="cmp2">
+              <div class="cmp-card">
+                <p class="cmp-name">Git</p>
+                <p class="line">A tool that runs on your computer.</p>
+                <p class="line">Tracks changes to files locally.</p>
+                <p class="line">The technology itself.</p>
+              </div>
+              <div class="cmp-card pos">
+                <p class="cmp-name">GitHub / GitLab</p>
+                <p class="line">Websites that store your repo in the cloud so others can access it and collaborate.</p>
+                <p class="line">Think of it like Google Drive — but specifically for code.</p>
+              </div>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">📑</span>
+              <p>Git is like track changes in a document — except it works across every file in your project simultaneously, never forgets anything, and you control exactly when a version gets saved.</p>
+            </div>
+            <table class="cmdtable">
+              <thead><tr><th>Git command</th><th>What it does</th></tr></thead>
+              <tbody>
+                <tr><td class="cmd">git init</td><td>Turns a regular folder into a repo — starts tracking changes. Usually happens once at the start of a project.</td></tr>
+                <tr><td class="cmd">git add</td><td>Tells Git which files to include in your next snapshot. Like selecting files before you back them up.</td></tr>
+                <tr><td class="cmd">git commit</td><td>Takes the snapshot. Creates a saved point in history you can return to. Usually includes a message describing what changed.</td></tr>
+                <tr><td class="cmd">git push</td><td>Sends your local snapshots to GitHub or GitLab so they're backed up and others can see them.</td></tr>
+                <tr><td class="cmd">git pull</td><td>Brings down changes others made from the cloud to your local files.</td></tr>
+                <tr><td class="cmd">git status</td><td>Shows what's changed since your last snapshot. Good to run when you're not sure what's happened.</td></tr>
+                <tr><td class="cmd">git log</td><td>Shows the full history of all your snapshots. Like a changelog.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sub: Bash command field guide -->
+          <div class="cc-sub" id="cc-bash">
+            <h3 class="cc-h">Bash commands — a designer's field guide</h3>
+            <div class="prose">
+              <p>When Claude Code wants to do something on your computer — create a folder, install a dependency, run a local server — it asks permission first. That request is a <span class="gterm" data-term="bash">bash</span> command.</p>
+              <p>Bash is just a way of talking directly to your computer through text. The commands look technical but most of them are doing simple things.</p>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">🛠️</span>
+              <p>Approving a bash command is like approving a contractor to do work in your house. You don't need to know how to do the work yourself — but you should know whether they're painting a wall or knocking one down.</p>
+            </div>
+            <table class="cmdtable">
+              <thead><tr><th>If you see</th><th>It's probably</th><th>Safe?</th></tr></thead>
+              <tbody>
+                <tr><td class="cmd">mkdir</td><td>Making a folder</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">cd</td><td>Moving between folders</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">npm install / pip install</td><td>Installing what the project needs</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">npm run / npx</td><td>Running something</td><td class="safe">✅ Usually</td></tr>
+                <tr><td class="cmd">open / start</td><td>Opening a file or server</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">cp / copy</td><td>Copying a file</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">mv</td><td>Moving or renaming</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">git add / commit / push</td><td>Saving code changes</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">pwd</td><td>Showing your location</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">curl / wget</td><td>Fetching from the internet</td><td class="safe">⚠️ Check the URL</td></tr>
+                <tr><td class="cmd">chmod</td><td>Changing permissions</td><td class="safe">⚠️ Ask Claude what and why</td></tr>
+                <tr><td class="cmd">rm</td><td>Deleting something</td><td class="safe">⚠️ Read carefully</td></tr>
+                <tr><td class="cmd">rm -rf</td><td>Deleting a folder and everything inside it</td><td class="safe">🛑 Make sure you mean it</td></tr>
+                <tr><td class="cmd">sudo</td><td>Running as administrator</td><td class="safe">🛑 Ask Claude what and why</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sub: The two approval options -->
+          <div class="cc-sub" id="cc-approvals">
+            <h3 class="cc-h">The two approval options — what they actually mean</h3>
+            <div class="cmp2">
+              <div class="cmp-card">
+                <p class="cmp-name">"Yes, just this once"</p>
+                <p class="line">Approve this specific command. Claude Code will ask again next time.</p>
+                <p class="line"><b>Right choice when:</b> you don't recognize the command, or you're early in a session and still getting oriented.</p>
+              </div>
+              <div class="cmp-card">
+                <p class="cmp-name">"Yes, don't ask again"</p>
+                <p class="line">Auto-approve all commands in this session. Claude Code runs what it needs to without checking in.</p>
+                <p class="line"><b>Right choice when:</b> you're deep in a working session, you understand what's being built, and the project is self-contained with nothing important at risk.</p>
+              </div>
+            </div>
+            <div class="tip">
+              <span class="tip-h">Tip</span>
+              When in doubt, type this before approving: <code>"What does this command do, in plain english?"</code> Claude Code will explain it. You're never required to approve something you don't understand.
+            </div>
+          </div>
+
+          <!-- Sub: How to write a brief -->
+          <div class="cc-sub" id="cc-briefs">
+            <h3 class="cc-h">How to write a brief Claude Code can execute</h3>
+            <p class="concept-intro">This site is the proof of concept. The brief used to build it — clear layers, approved copy, specific interaction notes, visual tone references — is the template for any Claude Code project.</p>
+            <ul class="principles">
+              <li><div><p class="pr-h">Establish context before requirements</p><p class="pr-b">Tell Claude Code what this is and who it's for before telling it what to build. It makes better decisions when it understands the purpose.</p></div></li>
+              <li><div><p class="pr-h">Be specific about interactions</p><p class="pr-b">"Make it interactive" is not a brief. "Show a stepped click-through where each click reveals one concept" is. The more precisely you describe the behavior, the less Claude Code has to invent.</p></div></li>
+              <li><div><p class="pr-h">Separate your copy from its copy</p><p class="pr-b">Provide approved content verbatim and tell Claude Code not to rewrite it. Let it generate only what you haven't written — then review that separately.</p></div></li>
+              <li><div><p class="pr-h">Propose before building</p><p class="pr-b">Ask Claude Code to describe its approach before it executes. "Show me two or three options before you build anything" keeps you in the design seat.</p></div></li>
+              <li><div><p class="pr-h">Scope narrowly and iterate</p><p class="pr-b">Don't hand Claude Code everything at once. Build one section, review it, then expand. Rebuilding is harder than iterating.</p></div></li>
+            </ul>
+          </div>
+
+          <!-- Sub: The gofer problem -->
+          <div class="cc-sub" id="cc-gofer">
+            <h3 class="cc-h">The gofer problem — and how to reduce it</h3>
+            <div class="prose">
+              <p>If you've found yourself copying output from one AI tool and pasting it into another, you've experienced what we'd call the gofer problem. You're acting as a human connector between tools that don't talk to each other natively.</p>
+              <p>This happens because different tools have different strengths — and right now they don't communicate automatically. The routing guide earlier in this section is the first step to reducing it: be intentional about which tool you're using and why, rather than ending up in multiple tools without meaning to.</p>
+            </div>
+            <ul class="tlist">
+              <li><div><p class="tl-h">Consolidate where possible</p><p class="tl-b">If you're building something in Claude Code, try to do as much as possible in that session. Give Claude Code the brief AND ask it to generate the content — the way this site was built.</p></div></li>
+              <li><div><p class="tl-h">Be intentional when you do switch</p><p class="tl-b">"I'm going to Claude.ai for a fast first draft I'll bring back here" is a deliberate choice. Accidentally ending up in three tools because you didn't know you could do it in one is friction that adds up.</p></div></li>
+              <li><div><p class="tl-h">Use CLAUDE.md to reduce context loss</p><p class="tl-b">The more your project preferences and standards live in a <span class="gterm" data-term="claude-md">CLAUDE.md</span> file, the less you have to re-paste context from other tools every session. Your brief becomes infrastructure.</p></div></li>
+            </ul>
+          </div>
+
+          <div class="panel-nav">
+            <kds-button kind="tertiary" class="js-backD">← Back</kds-button>
+            <span class="spacer"></span>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div class="layer-foot">
+      <a href="index.html">← Home</a>
+      <span>Layer 4 of 4 · For Designers</span>
+      <a href="glossary.html">Glossary →</a>
+    </div>
+
+  </div>
+
+  <script src="glossary-data.js"></script>
+  <script src="for-designers.js"></script>
+  <script src="glossary-popover.js"></script>
+</body>
+</html>
