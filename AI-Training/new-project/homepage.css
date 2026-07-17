@@ -53,6 +53,16 @@ body {
 .wordmark { font-weight: 900; font-size: 20px; letter-spacing: -0.015em; margin: 0; }
 .tagline { font-size: 14px; font-weight: 700; color: var(--ink-faint); }
 
+/* ---- Homepage tagline slot (below global nav) ----------- */
+.home-tagline {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  margin: 0;
+  padding: 32px 0 28px;
+}
+
 /* ---- Hero ----------------------------------------------- */
 .hero { padding: 26px 0 8px; }
 .hero h1 {

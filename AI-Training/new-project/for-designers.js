@@ -1,32 +1,30 @@
 /* ============================================================
-   Layer 4 — "For Designers"
-   - Main stepper (section-level): giving · artifacts · trust
-   - Going Deeper (opt-in): tools · figma · claude-code
+   For Designers (parent page)
+   - Section tabs (giving · artifacts · trust): standard tabs
+   - Copyable prompt blocks (scenario cards)
    - Interactive prompt anatomy (clean-copy independent of state)
-   - Copyable prompt blocks
-   - Claude Code: floating TOC (desktop) / jump menu (tablet+mobile)
-     + scroll-spy, shown only while that panel is in view at >=1280px
    - Hash routing for shareable deep links
+   (Going Deeper now lives on for-designers-going-deeper.html)
    ============================================================ */
 (function () {
   "use strict";
 
-  /* ---------- Main stepper ---------- */
+  /* ---------- Section tabs ---------- */
   var S1 = ["giving", "artifacts", "trust"];
   var s1Panels = {};
   document.querySelectorAll(".panel[data-step]").forEach(function (p) { s1Panels[Number(p.getAttribute("data-step"))] = p; });
-  var s1Tabs = Array.prototype.slice.call(document.querySelectorAll("#stepper-1 .step-tab"));
+  var tablist = document.getElementById("stepper-1");
+  var s1Tabs = Array.prototype.slice.call(tablist.querySelectorAll(".step-tab"));
   var cur1 = 0;
 
-  /* ---------- Going Deeper stepper ---------- */
-  var SD = ["tools", "figma", "claude-code"];
-  var sdPanels = {};
-  document.querySelectorAll(".panel[data-dstep]").forEach(function (p) { sdPanels[Number(p.getAttribute("data-dstep"))] = p; });
-  var sdTabs = Array.prototype.slice.call(document.querySelectorAll("#stepper-2 .step-tab"));
-  var deeperBody = document.getElementById("deeper-body");
-  var deeperCtaWrap = document.getElementById("deeper-cta-wrap");
-  var deeperOpen = document.getElementById("deeper-open");
-  var curD = 0, deeperShown = false;
+  tablist.setAttribute("role", "tablist");
+  s1Tabs.forEach(function (t, i) {
+    t.setAttribute("role", "tab");
+    t.id = "tab-" + S1[i];
+    t.setAttribute("aria-controls", S1[i]);
+    var panel = s1Panels[i];
+    if (panel) { panel.setAttribute("role", "tabpanel"); panel.setAttribute("aria-labelledby", "tab-" + S1[i]); }
+  });
 
   var suppressHash = false;
   function setHash(id) { if (location.hash !== "#" + id) { suppressHash = true; location.hash = id; } }
@@ -35,8 +33,9 @@
     cur1 = Math.max(0, Math.min(S1.length - 1, idx));
     Object.keys(s1Panels).forEach(function (k) { s1Panels[k].hidden = Number(k) !== cur1; });
     s1Tabs.forEach(function (t, i) {
-      t.classList.toggle("is-done", i < cur1);
-      if (i === cur1) t.setAttribute("aria-current", "step"); else t.removeAttribute("aria-current");
+      var on = i === cur1;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
     });
     if (!fromHash) setHash(S1[cur1]);
     if (s1Tabs[cur1]) s1Tabs[cur1].scrollIntoView({ block: "nearest", inline: "center" });
@@ -44,34 +43,17 @@
     if (h) h.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  function openDeeper() {
-    if (deeperShown) return;
-    deeperShown = true; deeperCtaWrap.hidden = true; deeperBody.hidden = false;
-  }
-  function gotoD(idx, fromHash) {
-    openDeeper();
-    curD = Math.max(0, Math.min(SD.length - 1, idx));
-    Object.keys(sdPanels).forEach(function (k) { sdPanels[k].hidden = Number(k) !== curD; });
-    sdTabs.forEach(function (t, i) {
-      t.classList.toggle("is-done", i < curD);
-      if (i === curD) t.setAttribute("aria-current", "step"); else t.removeAttribute("aria-current");
+
+  s1Tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { goto1(i); });
+    t.addEventListener("keydown", function (e) {
+      var idx = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") idx = (cur1 + 1) % S1.length;
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") idx = (cur1 - 1 + S1.length) % S1.length;
+      else if (e.key === "Home") idx = 0;
+      else if (e.key === "End") idx = S1.length - 1;
+      if (idx !== null) { e.preventDefault(); goto1(idx); s1Tabs[idx].focus(); }
     });
-    if (!fromHash) setHash(SD[curD]);
-    var h = sdPanels[curD].querySelector(".section-h");
-    if (h) h.focus({ preventScroll: true });
-    document.getElementById("stepper-2").scrollIntoView({ block: "start", behavior: "smooth" });
-    updateTocVisibility();
-  }
-
-  s1Tabs.forEach(function (t) { t.addEventListener("click", function () { goto1(Number(t.getAttribute("data-goto"))); }); });
-  sdTabs.forEach(function (t) { t.addEventListener("click", function () { gotoD(Number(t.getAttribute("data-dgoto"))); }); });
-  deeperOpen.addEventListener("click", function () { gotoD(0); });
-
-  document.addEventListener("click", function (e) {
-    if (e.target.closest(".js-next1")) { goto1(cur1 + 1); return; }
-    if (e.target.closest(".js-back1")) { goto1(cur1 - 1); return; }
-    if (e.target.closest(".js-nextD")) { gotoD(curD + 1); return; }
-    if (e.target.closest(".js-backD")) { gotoD(curD - 1); return; }
   });
 
   /* ---------- Copyable blocks ---------- */
@@ -94,7 +76,6 @@
     try { document.execCommand("copy"); } catch (e) {}
     document.body.removeChild(ta); flashCopied(btn);
   }
-  // static code blocks
   document.querySelectorAll(".codeblock .copy-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var pre = btn.parentElement.querySelector(".code");
@@ -168,7 +149,7 @@
       var k = Number(el.getAttribute("data-k"));
       var a = A_ANNO[k];
       if (!a) return;
-      if (activeLine === el) { clearActive(); return; } // toggle off
+      if (activeLine === el) { clearActive(); return; }
       if (activeLine) activeLine.classList.remove("active");
       activeLine = el; el.classList.add("active");
       annoEl.classList.remove("empty");
@@ -176,7 +157,6 @@
         '<p class="anno-echo">"' + esc(a.echo) + '"</p>' +
         '<p class="anno-title">' + esc(a.title) + "</p>" +
         '<p class="anno-body">' + esc(a.body) + "</p>";
-      // mobile: ensure annotation is visible
       if (window.matchMedia("(max-width: 640px)").matches) {
         annoEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
@@ -193,72 +173,15 @@
     });
   })();
 
-  /* ---------- Claude Code sub-nav (TOC + jump menu + scroll-spy) ---------- */
-  var toc = document.getElementById("cc-toc");
-  var ccPanel = document.getElementById("claude-code");
-  var ccInView = false;
-  function isWide() { return window.matchMedia("(min-width: 1280px)").matches; }
-  function updateTocVisibility() {
-    var show = ccInView && isWide() && sdPanels[2] && !sdPanels[2].hidden;
-    if (toc) toc.classList.toggle("visible", !!show);
-  }
-  if (ccPanel && "IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      ccInView = entries[0].isIntersecting;
-      updateTocVisibility();
-    }, { threshold: 0, rootMargin: "-120px 0px -40% 0px" }).observe(ccPanel);
-  }
-  window.addEventListener("resize", updateTocVisibility);
-
-  // scroll-spy: mark the topmost visible cc-sub active in both TOC and jump list
-  var ccSubs = Array.prototype.slice.call(document.querySelectorAll(".cc-sub"));
-  var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".cc-toc a, .cc-jump-list a"));
-  var spyScheduled = false;
-  function updateActiveSub() {
-    spyScheduled = false;
-    if (!ccSubs.length) return;
-    var active = ccSubs[0];
-    ccSubs.forEach(function (s) { if (s.getBoundingClientRect().top <= 160) active = s; });
-    tocLinks.forEach(function (a) {
-      a.classList.toggle("active", a.getAttribute("href") === "#" + active.id);
-    });
-  }
-  window.addEventListener("scroll", function () {
-    if (!spyScheduled) { spyScheduled = true; requestAnimationFrame(updateActiveSub); }
-  }, { passive: true });
-
-  // jump-menu (tablet + mobile)
-  var jumpBtn = document.getElementById("cc-jump-btn");
-  var jumpList = document.getElementById("cc-jump-list");
-  if (jumpBtn) {
-    jumpBtn.addEventListener("click", function () {
-      var open = jumpList.hidden;
-      jumpList.hidden = !open;
-      jumpBtn.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  }
-  // smooth-scroll for any sub-nav link (no hash change)
-  document.querySelectorAll("[data-cc]").forEach(function (a) {
-    a.addEventListener("click", function (e) {
-      e.preventDefault();
-      var target = document.querySelector(a.getAttribute("href"));
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (jumpList) { jumpList.hidden = true; if (jumpBtn) jumpBtn.setAttribute("aria-expanded", "false"); }
-    });
-  });
-
   /* ---------- Hash routing ---------- */
   function syncFromHash(initial) {
     if (suppressHash) { suppressHash = false; return; }
     var id = (location.hash || "").replace("#", "");
     if (S1.indexOf(id) !== -1) goto1(S1.indexOf(id), true);
-    else if (SD.indexOf(id) !== -1) gotoD(SD.indexOf(id), true);
     else if (initial) goto1(0, true);
   }
   window.addEventListener("hashchange", function () { syncFromHash(false); });
 
   var startId = (location.hash || "").replace("#", "");
-  if (SD.indexOf(startId) !== -1) { goto1(0, true); gotoD(SD.indexOf(startId), true); }
-  else if (S1.indexOf(startId) !== -1) { goto1(S1.indexOf(startId), true); }
-  else { goto1(0, true); }
+  if (S1.indexOf(startId) !== -1) goto1(S1.indexOf(startId), true); else goto1(0, true);
 })();

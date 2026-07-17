@@ -39,6 +39,13 @@ body {
 .home-link { font-size: 13px; font-weight: 800; color: var(--ink-faint); text-decoration: none; padding: 6px 8px; border-radius: 8px; }
 .home-link:hover { color: var(--accent); background: rgba(0,0,0,0.03); }
 
+/* Going Deeper page: breadcrumb + back link */
+.gd-top { width: 100%; max-width: var(--max); margin: 16px 0 0; }
+.gd-back { font-size: 13px; font-weight: 800; color: var(--accent-strong); text-decoration: none; }
+.gd-back:hover { text-decoration: underline; }
+.layer-kicker a { color: var(--accent-strong); text-decoration: none; }
+.layer-kicker a:hover { text-decoration: underline; }
+
 .layer-head { width: 100%; max-width: var(--max); margin: 24px 0 14px; }
 .layer-kicker { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
 .layer-title { margin: 0 0 4px; font-size: 34px; font-weight: 900; letter-spacing: -0.025em; }
@@ -62,8 +69,8 @@ body {
 }
 .step-tab:hover { border-color: var(--accent); color: var(--accent-strong); }
 .step-tab .n { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: var(--page-tint); color: var(--ink-soft); font-size: 12px; font-weight: 800; flex: 0 0 auto; }
-.step-tab[aria-current="step"] { border-color: var(--accent); background: var(--accent-tint); color: var(--accent-strong); }
-.step-tab[aria-current="step"] .n { background: var(--accent); color: #fff; }
+.step-tab[aria-selected="true"] { border-color: var(--accent); background: var(--accent-tint); color: var(--accent-strong); }
+.step-tab[aria-selected="true"] .n { background: var(--accent); color: #fff; }
 .step-tab.is-done .n { background: var(--accent); color: #fff; }
 .step-tab:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--accent-tint); }
 

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Designers · Going Deeper — So About This AI Stuff</title>
+  <meta name="description" content="Going deeper for designers — which tool for what, Figma AI, and Claude Code." />
+
+  <link rel="stylesheet" href="kds/kds-reset.css" />
+  <link rel="stylesheet" href="kds/light.css" />
+  <link rel="stylesheet" href="kds/kds-components.css" />
+  <script type="module" src="kds/mx-web-components/mx-web-components.esm.js"></script>
+
+  <link rel="stylesheet" href="for-designers.css" />
+  <link rel="stylesheet" href="glossary-popover.css" />
+  <link rel="stylesheet" href="site-nav.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <div class="gd-top">
+      <a class="gd-back" href="for-designers.html">← Back to For Designers</a>
+    </div>
+
+    <div class="layer-head">
+      <p class="layer-kicker"><a href="for-designers.html">For Designers</a> → Going Deeper</p>
+      <h1 class="layer-title">Want to go further?</h1>
+      <p class="layer-sub">This section is for designers who have been handed a new AI tool and told to "just use it" — and weren't sure where to start.</p>
+      <p class="layer-sub">We'll cover which tool to reach for and when, how to get started with Figma AI, and how to use Claude Code without needing an engineering background.</p>
+    </div>
+
+    <div class="deeper-body">
+        <nav class="stepper" id="stepper-2" aria-label="Going deeper">
+          <button type="button" class="step-tab" data-dgoto="0"><span class="n">🧰</span><span class="label">Tools</span></button>
+          <button type="button" class="step-tab" data-dgoto="1"><span class="n">🎨</span><span class="label">Figma AI</span></button>
+          <button type="button" class="step-tab" data-dgoto="2"><span class="n">⌨️</span><span class="label">Claude Code</span></button>
+        </nav>
+
+        <!-- Going Deeper Concept 1 — Which tool for what -->
+        <section class="panel" data-dstep="0" id="tools">
+          <p class="section-eyebrow">Going deeper</p>
+          <h2 class="section-h" tabindex="-1">Which tool for what</h2>
+          <p class="section-intro">You may have access to several AI tools and no clear guidance on which to use for what. Here's the honest breakdown for your stack.</p>
+
+          <div class="tool-cards">
+            <div class="tool-card">
+              <p class="tc-name">Claude Code</p>
+              <p class="tc-by">Made by Anthropic</p>
+              <p class="tc-best">Building tools, prototypes, and structured projects that need to exist as real files. Works directly in your file system. Highest learning curve of the tools in this guide — also the highest capability ceiling.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You need to build something, not just draft it.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">Claude.ai</p>
+              <p class="tc-by">Made by Anthropic</p>
+              <p class="tc-best">Writing, synthesis, research readouts, artifact drafts. Conversational interface — no file system, no setup. Where to start for most design research tasks.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You have data to synthesize or content to draft and you want to stay in a chat interface.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">Copilot</p>
+              <p class="tc-by">Made by Microsoft (OpenAI engine)</p>
+              <p class="tc-best">Tasks you're already doing in Microsoft 365 — Word, PowerPoint, Teams, Outlook, Excel. Analyzing support tickets in Excel is a strong use case.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You're already in a Microsoft tool and don't want to switch contexts.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">Figma AI</p>
+              <p class="tc-by">Made by Figma</p>
+              <p class="tc-best">Design-specific tasks that would otherwise require leaving Figma — writing copy on a frame, generating variations, getting layout suggestions. Still maturing — results vary.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You're already in Figma and the task is design-specific.</p>
+            </div>
+            <div class="tool-card">
+              <p class="tc-name">GenAI Studio</p>
+              <p class="tc-by">Made by Google</p>
+              <p class="tc-best">Multimodal tasks — inputs that combine images, audio, and text. More technical interface than the other tools in this list — designed for developers but usable by designers willing to explore.</p>
+              <p class="tc-reach"><b>Reach for it when:</b> You're working with inputs that aren't just text, or you want to experiment with capabilities beyond chat.</p>
+            </div>
+          </div>
+
+          <div class="routing">
+            <p class="rt-h">Task routing — reach for:</p>
+            <table>
+              <tbody>
+                <tr><td class="task">Draft a research readout from transcripts</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Analyze support tickets</td><td class="arrow">→</td><td class="tool">Copilot (in Excel) or Claude.ai</td></tr>
+                <tr><td class="task">Build an interactive prototype or tool</td><td class="arrow">→</td><td class="tool">Claude Code</td></tr>
+                <tr><td class="task">Write UX copy inside a design file</td><td class="arrow">→</td><td class="tool">Figma AI</td></tr>
+                <tr><td class="task">Synthesize interview notes</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Generate a persona draft</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Pressure-test a journey map</td><td class="arrow">→</td><td class="tool">Claude.ai</td></tr>
+                <tr><td class="task">Experiment with image or multimodal input</td><td class="arrow">→</td><td class="tool">GenAI Studio</td></tr>
+                <tr><td class="task">Build something that needs to live as a file or be shared as a link</td><td class="arrow">→</td><td class="tool">Claude Code</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel-nav">
+            <span class="spacer"></span>
+            <kds-button kind="primary" class="js-nextD">Next →</kds-button>
+          </div>
+        </section>
+
+        <!-- Going Deeper Concept 2 — Figma AI -->
+        <section class="panel" data-dstep="1" id="figma" hidden>
+          <p class="section-eyebrow">Going deeper</p>
+          <h2 class="section-h" tabindex="-1">Figma AI — what it is and how to think about it</h2>
+          <p class="section-intro">Figma AI is different from the other tools in this guide in one important way: it lives inside Figma. You don't switch tabs, paste content somewhere else, or translate between a design file and a chat interface. The AI assistance happens in context — while you're looking at your actual designs.</p>
+
+          <div class="analogy">
+            <span class="glyph" aria-hidden="true">🎨</span>
+            <p>Figma AI is like having a design assistant sitting next to you while you work — available when you need it, ignorable when you don't. The value is that it's already in the room.</p>
+          </div>
+
+          <div class="cmp2">
+            <div class="cmp-card pos">
+              <p class="cmp-name">What that makes it good for</p>
+              <p class="line">Tasks where leaving Figma creates friction.</p>
+              <p class="line">Writing and rewriting copy directly on a frame — error states, button labels, onboarding text — without copying it out and back in.</p>
+              <p class="line">Generating layer variations without breaking your workflow.</p>
+              <p class="line">Getting a first pass at auto-layout or component suggestions while you're already in the file.</p>
+            </div>
+            <div class="cmp-card">
+              <p class="cmp-name">What it doesn't replace</p>
+              <p class="line">Claude.ai or ChatGPT for research and synthesis work — Figma AI is a design tool, not a research tool.</p>
+              <p class="line">Claude Code for building anything that needs to exist outside of Figma.</p>
+              <p class="line">Your own design judgment — Figma AI generates options, you decide what's right.</p>
+            </div>
+          </div>
+
+          <div class="followup">
+            <span class="tag">The honest state of it</span>
+            <p style="margin:0 0 10px;">Figma AI is still maturing. Some features work well. Some are inconsistent. The interface changes frequently as Figma ships updates.</p>
+            <p style="margin:0 0 10px;">The best way to learn it right now is to open a low-stakes file and try the things that show up — right-click menus, the toolbar, and the AI panel if it's available in your plan.</p>
+            <p style="margin:0;">For current feature documentation, go to Figma's own docs — they'll always be more up to date than anything written here.</p>
+          </div>
+
+          <a class="doc-cta" href="https://figma.com/ai" target="_blank" rel="noopener">Figma AI documentation →</a>
+
+          <div class="panel-nav">
+            <kds-button kind="tertiary" class="js-backD">← Back</kds-button>
+            <span class="spacer"></span>
+            <kds-button kind="primary" class="js-nextD">Next →</kds-button>
+          </div>
+        </section>
+
+        <!-- Going Deeper Concept 3 — Claude Code for designers -->
+        <section class="panel" data-dstep="2" id="claude-code" hidden>
+          <p class="section-eyebrow">Going deeper</p>
+          <h2 class="section-h" tabindex="-1">Claude Code for designers</h2>
+          <p class="section-intro">Claude Code has the steepest learning curve of any tool in this guide. It also has the highest ceiling. This section is for designers who have access to it and want to actually use it — without needing an engineering background.</p>
+
+          <!-- mobile/tablet jump menu -->
+          <div class="cc-jump">
+            <button type="button" class="cc-jump-btn" id="cc-jump-btn" aria-expanded="false">Jump to… <span aria-hidden="true">▾</span></button>
+            <ul class="cc-jump-list" id="cc-jump-list" hidden>
+              <li><a href="#cc-what" data-cc>What it actually is</a></li>
+              <li><a href="#cc-files" data-cc>Where projects live</a></li>
+              <li><a href="#cc-git" data-cc>Git and repos</a></li>
+              <li><a href="#cc-bash" data-cc>Bash command guide</a></li>
+              <li><a href="#cc-approvals" data-cc>The two approval options</a></li>
+              <li><a href="#cc-briefs" data-cc>How to write a brief</a></li>
+              <li><a href="#cc-gofer" data-cc>The gofer problem</a></li>
+            </ul>
+          </div>
+
+          <!-- desktop floating TOC -->
+          <nav class="cc-toc" id="cc-toc" aria-label="Claude Code sections">
+            <p class="toc-cap">On this page</p>
+            <ul>
+              <li><a href="#cc-what" data-cc>What it actually is</a></li>
+              <li><a href="#cc-files" data-cc>Where projects live</a></li>
+              <li><a href="#cc-git" data-cc>Git and repos</a></li>
+              <li><a href="#cc-bash" data-cc>Bash command guide</a></li>
+              <li><a href="#cc-approvals" data-cc>The two approval options</a></li>
+              <li><a href="#cc-briefs" data-cc>How to write a brief</a></li>
+              <li><a href="#cc-gofer" data-cc>The gofer problem</a></li>
+            </ul>
+          </nav>
+
+          <!-- Sub: What it actually is -->
+          <div class="cc-sub" id="cc-what">
+            <h3 class="cc-h">What it actually is</h3>
+            <div class="prose">
+              <p>Claude Code is different from Claude.ai — the chat interface you might use for writing or research. Claude Code is an AI that works directly with files on your computer. It can create files, write code, build things, and make changes across an entire project at once.</p>
+            </div>
+            <div class="cmp2">
+              <div class="cmp-card">
+                <p class="cmp-name">Claude.ai</p>
+                <p class="line">You have a conversation.</p>
+                <p class="line">It writes things for you.</p>
+                <p class="line">You copy what you need.</p>
+              </div>
+              <div class="cmp-card pos">
+                <p class="cmp-name">Claude Code</p>
+                <p class="line">You give it a project.</p>
+                <p class="line">It builds things for you.</p>
+                <p class="line">It works in your actual files.</p>
+              </div>
+            </div>
+            <div class="followup">
+              <span class="tag">For designers</span>
+              For designers, this means you can use Claude Code to build prototypes, create simple tools, or — as this site demonstrates — build an entire interactive website by briefing it the way you'd brief a developer.
+            </div>
+          </div>
+
+          <!-- Sub: Where projects live -->
+          <div class="cc-sub" id="cc-files">
+            <h3 class="cc-h">Where projects live — understanding the file system</h3>
+            <div class="prose">
+              <p>When Claude Code creates a project, it creates a folder on your computer. But where that folder ends up depends on where your <span class="gterm" data-term="terminal">terminal</span> is currently pointed — and that's not always obvious.</p>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">📍</span>
+              <p>The terminal has a location, like a cursor in Finder. Wherever it's pointed is where new things get created.</p>
+            </div>
+            <p class="step-lead">How to know where you are:</p>
+            <div class="prose"><p>Type: <code class="inline">pwd</code> — That stands for "print working directory." It shows your current location — something like <code class="inline">/Users/yourname/Documents</code></p></div>
+            <p class="step-lead">How to avoid losing your projects:</p>
+            <div class="steps">
+              <div class="step-item"><span class="sn">1</span><span class="st">Create a dedicated folder for AI projects somewhere you'll remember — Desktop or Documents works well. Name it something clear: "AI Projects" or "Claude Projects."</span></div>
+              <div class="step-item"><span class="sn">2</span><span class="st">When you start a new Claude Code session, tell it where to put the project: "Create this project in /Users/[yourname]/Documents/AI-Projects/"</span></div>
+              <div class="step-item"><span class="sn">3</span><span class="st">Now you always know where your work lives — no hunting through Finder wondering where things went.</span></div>
+            </div>
+          </div>
+
+          <!-- Sub: Git and repos -->
+          <div class="cc-sub" id="cc-git">
+            <h3 class="cc-h">Git and repos — what they are and why they matter</h3>
+            <div class="prose">
+              <p>When Claude Code asks to initialize a <span class="gterm" data-term="repository">repository</span> or runs git commands, here's what's actually happening.</p>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">🗂️</span>
+              <p>A repository is a project folder with a memory. A regular folder holds your files. A repo holds your files AND a complete history of every change ever made — who changed what, when, and why.</p>
+            </div>
+            <div class="prose">
+              <p>That history is managed by a tool called <span class="gterm" data-term="git">Git</span>. Git is not the same as <span class="gterm" data-term="github">GitHub</span> — a common point of confusion:</p>
+            </div>
+            <div class="cmp2">
+              <div class="cmp-card">
+                <p class="cmp-name">Git</p>
+                <p class="line">A tool that runs on your computer.</p>
+                <p class="line">Tracks changes to files locally.</p>
+                <p class="line">The technology itself.</p>
+              </div>
+              <div class="cmp-card pos">
+                <p class="cmp-name">GitHub / GitLab</p>
+                <p class="line">Websites that store your repo in the cloud so others can access it and collaborate.</p>
+                <p class="line">Think of it like Google Drive — but specifically for code.</p>
+              </div>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">📑</span>
+              <p>Git is like track changes in a document — except it works across every file in your project simultaneously, never forgets anything, and you control exactly when a version gets saved.</p>
+            </div>
+            <table class="cmdtable">
+              <thead><tr><th>Git command</th><th>What it does</th></tr></thead>
+              <tbody>
+                <tr><td class="cmd">git init</td><td>Turns a regular folder into a repo — starts tracking changes. Usually happens once at the start of a project.</td></tr>
+                <tr><td class="cmd">git add</td><td>Tells Git which files to include in your next snapshot. Like selecting files before you back them up.</td></tr>
+                <tr><td class="cmd">git commit</td><td>Takes the snapshot. Creates a saved point in history you can return to. Usually includes a message describing what changed.</td></tr>
+                <tr><td class="cmd">git push</td><td>Sends your local snapshots to GitHub or GitLab so they're backed up and others can see them.</td></tr>
+                <tr><td class="cmd">git pull</td><td>Brings down changes others made from the cloud to your local files.</td></tr>
+                <tr><td class="cmd">git status</td><td>Shows what's changed since your last snapshot. Good to run when you're not sure what's happened.</td></tr>
+                <tr><td class="cmd">git log</td><td>Shows the full history of all your snapshots. Like a changelog.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sub: Bash command field guide -->
+          <div class="cc-sub" id="cc-bash">
+            <h3 class="cc-h">Bash commands — a designer's field guide</h3>
+            <div class="prose">
+              <p>When Claude Code wants to do something on your computer — create a folder, install a dependency, run a local server — it asks permission first. That request is a <span class="gterm" data-term="bash">bash</span> command.</p>
+              <p>Bash is just a way of talking directly to your computer through text. The commands look technical but most of them are doing simple things.</p>
+            </div>
+            <div class="analogy">
+              <span class="glyph" aria-hidden="true">🛠️</span>
+              <p>Approving a bash command is like approving a contractor to do work in your house. You don't need to know how to do the work yourself — but you should know whether they're painting a wall or knocking one down.</p>
+            </div>
+            <table class="cmdtable">
+              <thead><tr><th>If you see</th><th>It's probably</th><th>Safe?</th></tr></thead>
+              <tbody>
+                <tr><td class="cmd">mkdir</td><td>Making a folder</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">cd</td><td>Moving between folders</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">npm install / pip install</td><td>Installing what the project needs</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">npm run / npx</td><td>Running something</td><td class="safe">✅ Usually</td></tr>
+                <tr><td class="cmd">open / start</td><td>Opening a file or server</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">cp / copy</td><td>Copying a file</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">mv</td><td>Moving or renaming</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">git add / commit / push</td><td>Saving code changes</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">pwd</td><td>Showing your location</td><td class="safe">✅ Yes</td></tr>
+                <tr><td class="cmd">curl / wget</td><td>Fetching from the internet</td><td class="safe">⚠️ Check the URL</td></tr>
+                <tr><td class="cmd">chmod</td><td>Changing permissions</td><td class="safe">⚠️ Ask Claude what and why</td></tr>
+                <tr><td class="cmd">rm</td><td>Deleting something</td><td class="safe">⚠️ Read carefully</td></tr>
+                <tr><td class="cmd">rm -rf</td><td>Deleting a folder and everything inside it</td><td class="safe">🛑 Make sure you mean it</td></tr>
+                <tr><td class="cmd">sudo</td><td>Running as administrator</td><td class="safe">🛑 Ask Claude what and why</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sub: The two approval options -->
+          <div class="cc-sub" id="cc-approvals">
+            <h3 class="cc-h">The two approval options — what they actually mean</h3>
+            <div class="cmp2">
+              <div class="cmp-card">
+                <p class="cmp-name">"Yes, just this once"</p>
+                <p class="line">Approve this specific command. Claude Code will ask again next time.</p>
+                <p class="line"><b>Right choice when:</b> you don't recognize the command, or you're early in a session and still getting oriented.</p>
+              </div>
+              <div class="cmp-card">
+                <p class="cmp-name">"Yes, don't ask again"</p>
+                <p class="line">Auto-approve all commands in this session. Claude Code runs what it needs to without checking in.</p>
+                <p class="line"><b>Right choice when:</b> you're deep in a working session, you understand what's being built, and the project is self-contained with nothing important at risk.</p>
+              </div>
+            </div>
+            <div class="tip">
+              <span class="tip-h">Tip</span>
+              When in doubt, type this before approving: <code>"What does this command do, in plain english?"</code> Claude Code will explain it. You're never required to approve something you don't understand.
+            </div>
+          </div>
+
+          <!-- Sub: How to write a brief -->
+          <div class="cc-sub" id="cc-briefs">
+            <h3 class="cc-h">How to write a brief Claude Code can execute</h3>
+            <p class="concept-intro">This site is the proof of concept. The brief used to build it — clear layers, approved copy, specific interaction notes, visual tone references — is the template for any Claude Code project.</p>
+            <ul class="principles">
+              <li><div><p class="pr-h">Establish context before requirements</p><p class="pr-b">Tell Claude Code what this is and who it's for before telling it what to build. It makes better decisions when it understands the purpose.</p></div></li>
+              <li><div><p class="pr-h">Be specific about interactions</p><p class="pr-b">"Make it interactive" is not a brief. "Show a stepped click-through where each click reveals one concept" is. The more precisely you describe the behavior, the less Claude Code has to invent.</p></div></li>
+              <li><div><p class="pr-h">Separate your copy from its copy</p><p class="pr-b">Provide approved content verbatim and tell Claude Code not to rewrite it. Let it generate only what you haven't written — then review that separately.</p></div></li>
+              <li><div><p class="pr-h">Propose before building</p><p class="pr-b">Ask Claude Code to describe its approach before it executes. "Show me two or three options before you build anything" keeps you in the design seat.</p></div></li>
+              <li><div><p class="pr-h">Scope narrowly and iterate</p><p class="pr-b">Don't hand Claude Code everything at once. Build one section, review it, then expand. Rebuilding is harder than iterating.</p></div></li>
+            </ul>
+          </div>
+
+          <!-- Sub: The gofer problem -->
+          <div class="cc-sub" id="cc-gofer">
+            <h3 class="cc-h">The gofer problem — and how to reduce it</h3>
+            <div class="prose">
+              <p>If you've found yourself copying output from one AI tool and pasting it into another, you've experienced what we'd call the gofer problem. You're acting as a human connector between tools that don't talk to each other natively.</p>
+              <p>This happens because different tools have different strengths — and right now they don't communicate automatically. The routing guide earlier in this section is the first step to reducing it: be intentional about which tool you're using and why, rather than ending up in multiple tools without meaning to.</p>
+            </div>
+            <ul class="tlist">
+              <li><div><p class="tl-h">Consolidate where possible</p><p class="tl-b">If you're building something in Claude Code, try to do as much as possible in that session. Give Claude Code the brief AND ask it to generate the content — the way this site was built.</p></div></li>
+              <li><div><p class="tl-h">Be intentional when you do switch</p><p class="tl-b">"I'm going to Claude.ai for a fast first draft I'll bring back here" is a deliberate choice. Accidentally ending up in three tools because you didn't know you could do it in one is friction that adds up.</p></div></li>
+              <li><div><p class="tl-h">Use CLAUDE.md to reduce context loss</p><p class="tl-b">The more your project preferences and standards live in a <span class="gterm" data-term="claude-md">CLAUDE.md</span> file, the less you have to re-paste context from other tools every session. Your brief becomes infrastructure.</p></div></li>
+            </ul>
+          </div>
+
+          <div class="panel-nav">
+            <kds-button kind="tertiary" class="js-backD">← Back</kds-button>
+            <span class="spacer"></span>
+          </div>
+        </section>
+    </div>
+
+    <div class="layer-foot">
+      <a href="for-designers.html">← Back to For Designers</a>
+      <span>For Designers · Going Deeper</span>
+      <a href="index.html">Home →</a>
+    </div>
+
+  </div>
+
+  <script src="glossary-data.js"></script>
+  <script src="for-designers-going-deeper.js"></script>
+  <script src="glossary-popover.js"></script>
+  <script src="site-nav.js"></script>
+</body>
+</html>

@@ -13,66 +13,19 @@
   <script type="module" src="kds/mx-web-components/mx-web-components.esm.js"></script>
 
   <link rel="stylesheet" href="homepage.css" />
+  <link rel="stylesheet" href="site-nav.css" />
 </head>
 <body>
 
   <div class="wrap">
 
-    <!-- HEADER -->
-    <header class="site-head">
-      <h1 class="wordmark">So About This AI Stuff</h1>
-      <span class="tagline">Finally, someone just explains it.</span>
-    </header>
+    <!-- Tagline slot (homepage only) -->
+    <p class="home-tagline">Finally, someone just explains it.</p>
 
     <!-- HERO -->
     <section class="hero">
       <h1>AI is everywhere. The explanation wasn't included.</h1>
       <p>AI is suddenly everywhere, and it's easy to feel like everyone got a memo you missed. This is a calm, friendly place to get oriented — plain-language explanations of the tools, the jargon, and how any of it actually applies to design. No prior knowledge assumed, no judgment; poke around wherever you're curious.</p>
-    </section>
-
-    <!-- BROWSE BY TOPIC -->
-    <section class="browse">
-      <h2 class="section-title">Browse by topic</h2>
-      <div class="topic-grid">
-
-        <!-- Layer 1 — live -->
-        <a class="topic-card" href="landscape.html">
-          <span class="tc-emoji" aria-hidden="true">🗺️</span>
-          <span class="tc-head">The Landscape</span>
-          <span class="tc-q">What even is all this?</span>
-          <span class="tc-teaser">The tools, the companies, and why the names are so confusing.</span>
-          <span class="tc-cta">Explore →</span>
-        </a>
-
-        <!-- Layer 2 — live -->
-        <a class="topic-card" href="under-the-hood.html">
-          <span class="tc-emoji" aria-hidden="true">🔧</span>
-          <span class="tc-head">Under the Hood</span>
-          <span class="tc-q">How does this actually work?</span>
-          <span class="tc-teaser">Models, tokens, context windows — the mental models that make it click.</span>
-          <span class="tc-cta">Explore →</span>
-        </a>
-
-        <!-- Layer 3 — coming soon -->
-        <button type="button" class="topic-card muted" data-soon>
-          <span class="tc-badge">Coming soon</span>
-          <span class="tc-emoji" aria-hidden="true">🎯</span>
-          <span class="tc-head">Using It Well</span>
-          <span class="tc-q">How do I get good at this?</span>
-          <span class="tc-teaser">Prompts that work, when to trust it, and where it falls down.</span>
-          <span class="tc-msg" hidden>This one's on the way — check back soon.</span>
-        </button>
-
-        <!-- Layer 4 — live -->
-        <a class="topic-card" href="for-designers.html">
-          <span class="tc-emoji" aria-hidden="true">🎨</span>
-          <span class="tc-head">For Designers</span>
-          <span class="tc-q">How does this apply to my work?</span>
-          <span class="tc-teaser">Research, artifacts, UX writing, and working with Claude Code.</span>
-          <span class="tc-cta">Explore →</span>
-        </a>
-
-      </div>
     </section>
 
     <!-- QUIZ OFFER -->
@@ -84,6 +37,51 @@
           <p class="qo-body">Answer 3 quick questions and we'll point you in the right direction.</p>
         </div>
         <kds-button kind="primary" id="open-quiz" data-open-quiz>Find my starting point →</kds-button>
+      </div>
+    </section>
+
+    <!-- BROWSE BY TOPIC -->
+    <section class="browse">
+      <h2 class="section-title">Browse by topic</h2>
+      <div class="topic-grid">
+
+        <!-- The Landscape — live -->
+        <a class="topic-card" href="landscape.html">
+          <span class="tc-emoji" aria-hidden="true">🗺️</span>
+          <span class="tc-head">The Landscape</span>
+          <span class="tc-q">What even is all this?</span>
+          <span class="tc-teaser">The tools, the companies, and why the names are so confusing.</span>
+          <span class="tc-cta">Explore →</span>
+        </a>
+
+        <!-- Under the Hood — live -->
+        <a class="topic-card" href="under-the-hood.html">
+          <span class="tc-emoji" aria-hidden="true">🔧</span>
+          <span class="tc-head">Under the Hood</span>
+          <span class="tc-q">How does this actually work?</span>
+          <span class="tc-teaser">Models, tokens, context windows — the mental models that make it click.</span>
+          <span class="tc-cta">Explore →</span>
+        </a>
+
+        <!-- Using It Well — coming soon -->
+        <button type="button" class="topic-card muted" data-soon>
+          <span class="tc-badge">Coming soon</span>
+          <span class="tc-emoji" aria-hidden="true">🎯</span>
+          <span class="tc-head">Using It Well</span>
+          <span class="tc-q">How do I get good at this?</span>
+          <span class="tc-teaser">Prompts that work, when to trust it, and where it falls down.</span>
+          <span class="tc-msg" hidden>This one's on the way — check back soon.</span>
+        </button>
+
+        <!-- For Designers — live -->
+        <a class="topic-card" href="for-designers.html">
+          <span class="tc-emoji" aria-hidden="true">🎨</span>
+          <span class="tc-head">For Designers</span>
+          <span class="tc-q">How does this apply to my work?</span>
+          <span class="tc-teaser">Research, artifacts, UX writing, and working with Claude Code.</span>
+          <span class="tc-cta">Explore →</span>
+        </a>
+
       </div>
     </section>
 
@@ -201,5 +199,6 @@
   </aside>
 
   <script src="quiz.js"></script>
+  <script src="site-nav.js"></script>
 </body>
 </html>
